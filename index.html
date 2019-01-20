@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>きふわらべ</title>
+	<script>
+		var scene = "title-0";
+		var intervalFrame = 0;
+		
+		/** ゲームの時計を開始。 */
+		function start_timer() {
+			setInterval(
+				() => {
+					switch (scene) {
+						case "title-0":
+							document.getElementById("title").style.visibility = "visible";
+							scene = "title-1";
+							break;
+							
+						case "title-1":
+							let left = document.getElementById("title").style.left;
+							// 末尾の px を外す。
+							left = left.substring(0, left.length - 2);
+							if (0 < left) {
+								// alert("left = " + left);
+								left -= 20;
+								document.getElementById("title").style.left = left + "px";
+							} else {
+								scene = "title-window-0";
+								intervalFrame = 30;
+							}
+							break;
+
+						case "title-window-0":
+							if (0 < intervalFrame) {
+								intervalFrame -= 1;
+							} else {
+								scene = "title-window-1";
+							}
+							break;
+
+						case "title-window-1":
+							document.getElementById("title-scene").style.visibility = "visible";
+							scene = "finished";
+							break;
+
+						case "start-game":
+							alert("ゲーム開始。");
+							scene = "finished";
+							break;
+					}
+				},
+				16
+			);
+		}
+
+		/** ゲーム画面の初期化。 */
+		function init() {
+			document.getElementById("title").style.left = "1920px";
+			document.getElementById("title-scene").style.visibility = "hidden";
+		}
+		
+		/** ゲームを開始します。 */
+		function start_game() {
+			scene = "start-game";
+		}
+		
+		/** ゲームを終了します。 */
+		function finish_game() {
+			init();
+			scene = "title-0";
+		}
+	</script>
+</head>
+<body style="background-color:white;" onload="init(); start_timer();">
+
+	<div style="position:absolute; top:0px; left:0px; width:1920px; height:1080px; background-color:#eeeeff;">
+		<img id="title" src="./img/title.png" style="visibility:hidden; position:absolute; top:0px;" />
+		<div id="title-scene" style="visibility:hidden; position:absolute; top:0px; left:0px; width:100%; height:100%; background-image:url('./img/window1.png');">
+			<a href="javascript: void(0);" style="position:absolute; top:570px; left:560px; font-size:64px;" onclick="start_game();">はじめる</a>
+			<a href="javascript: finish_game();" style="position:absolute; top:670px; left:560px; font-size:64px;">おわる</a>
+		</div>
+	</div>
+
+	<!-- 裏を隠す板。 -->
+	<div style="position:absolute; top:0px; left:1920px; width:1920px; height:1080px; background-color:white;">
+	</div>
+	
+</body>
+</html>
