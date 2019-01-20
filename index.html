@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>きふわらべ</title>
+	<title>非可換な群</title>
 	<script>
 		var scene = "title-0";
 		var intervalFrame = 0;
@@ -45,7 +45,9 @@
 							break;
 
 						case "start-game":
-							alert("ゲーム開始。");
+							document.getElementById("title").style.visibility = "hidden";
+							document.getElementById("title-scene").style.visibility = "hidden";
+							document.getElementById("development-scene").style.visibility = "visible";
 							scene = "finished";
 							break;
 					}
@@ -57,7 +59,9 @@
 		/** ゲーム画面の初期化。 */
 		function init() {
 			document.getElementById("title").style.left = "1920px";
+			document.getElementById("title").style.visibility = "hidden";
 			document.getElementById("title-scene").style.visibility = "hidden";
+			document.getElementById("development-scene").style.visibility = "hidden";
 		}
 		
 		/** ゲームを開始します。 */
@@ -79,6 +83,37 @@
 		<div id="title-scene" style="visibility:hidden; position:absolute; top:0px; left:0px; width:100%; height:100%; background-image:url('./img/window1.png');">
 			<a href="javascript: void(0);" style="position:absolute; top:570px; left:560px; font-size:64px;" onclick="start_game();">はじめる</a>
 			<a href="javascript: finish_game();" style="position:absolute; top:670px; left:560px; font-size:64px;">おわる</a>
+		</div>
+		<div id="development-scene" style="visibility:hidden; position:absolute; top:0px; left:0px; width:100%; height:100%; background-image:url('./img/development.png');">
+			<img id="tile-0" src="./img/tile-orange.png" style="position:absolute; left:768px; top:64px; width:96px; height:96px;" />
+			<img id="tile-1" src="./img/tile-orange.png" style="position:absolute; left:896px; top:64px; width:96px; height:96px;" />
+			<img id="tile-2" src="./img/tile-orange.png" style="position:absolute; left:768px; top:192px; width:96px; height:96px;" />
+			<img id="tile-3" src="./img/tile-orange.png" style="position:absolute; left:896px; top:192px; width:96px; height:96px;" />
+
+			<img id="tile-4" src="./img/tile-violet.png" style="position:absolute; left:512px; top:320px; width:96px; height:96px;" />
+			<img id="tile-5" src="./img/tile-violet.png" style="position:absolute; left:640px; top:320px; width:96px; height:96px;" />
+			<img id="tile-6" src="./img/tile-violet.png" style="position:absolute; left:512px; top:448px; width:96px; height:96px;" />
+			<img id="tile-7" src="./img/tile-violet.png" style="position:absolute; left:640px; top:448px; width:96px; height:96px;" />
+
+			<img id="tile-8" src="./img/tile-pink.png" style="position:absolute; left:768px; top:320px; width:96px; height:96px;" />
+			<img id="tile-9" src="./img/tile-pink.png" style="position:absolute; left:896px; top:320px; width:96px; height:96px;" />
+			<img id="tile-10" src="./img/tile-pink.png" style="position:absolute; left:768px; top:448px; width:96px; height:96px;" />
+			<img id="tile-11" src="./img/tile-pink.png" style="position:absolute; left:896px; top:448px; width:96px; height:96px;" />
+
+			<img id="tile-12" src="./img/tile-sky-blue.png" style="position:absolute; left:1024px; top:320px; width:96px; height:96px;" />
+			<img id="tile-13" src="./img/tile-sky-blue.png" style="position:absolute; left:1152px; top:320px; width:96px; height:96px;" />
+			<img id="tile-14" src="./img/tile-sky-blue.png" style="position:absolute; left:1024px; top:448px; width:96px; height:96px;" />
+			<img id="tile-15" src="./img/tile-sky-blue.png" style="position:absolute; left:1152px; top:448px; width:96px; height:96px;" />
+
+			<img id="tile-16" src="./img/tile-gray.png" style="position:absolute; left:1280px; top:320px; width:96px; height:96px;" />
+			<img id="tile-17" src="./img/tile-gray.png" style="position:absolute; left:1408px; top:320px; width:96px; height:96px;" />
+			<img id="tile-18" src="./img/tile-gray.png" style="position:absolute; left:1280px; top:448px; width:96px; height:96px;" />
+			<img id="tile-19" src="./img/tile-gray.png" style="position:absolute; left:1408px; top:448px; width:96px; height:96px;" />
+			
+			<img id="tile-20" src="./img/tile-yellow-green.png" style="position:absolute; left:768px; top:576px; width:96px; height:96px;" />
+			<img id="tile-21" src="./img/tile-yellow-green.png" style="position:absolute; left:896px; top:576px; width:96px; height:96px;" />
+			<img id="tile-22" src="./img/tile-yellow-green.png" style="position:absolute; left:768px; top:704px; width:96px; height:96px;" />
+			<img id="tile-23" src="./img/tile-yellow-green.png" style="position:absolute; left:896px; top:704px; width:96px; height:96px;" />
 		</div>
 	</div>
 
