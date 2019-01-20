@@ -193,6 +193,22 @@
 			}			
 		}
 		
+		/** ランダムな回数、ランダムにキューブをねじります。 */
+		function shuffule()
+		{
+			// 0~100
+			var count = Math.round( Math.random()*100 );
+			count += 50;
+			
+			for(i=0; i<count; i++)
+			{
+				// 0~11
+				var handle = Math.round( Math.random()*11 );
+				rotate(handle);
+			}
+		}
+		
+		
 	</script>
 </head>
 <body style="background-color:white;" onload="init(); start_timer();">
@@ -294,6 +310,9 @@
 			<img id="tile-21" src="./img/tile-yellow-green.png" style="position:absolute; left:896px; top:576px; width:96px; height:96px;" />
 			<img id="tile-22" src="./img/tile-yellow-green.png" style="position:absolute; left:768px; top:704px; width:96px; height:96px;" />
 			<img id="tile-23" src="./img/tile-yellow-green.png" style="position:absolute; left:896px; top:704px; width:96px; height:96px;" />
+
+			<!-- ボタン。 -->
+			<a href="javascript: shuffule();" style="position:absolute; left:448px; top:32px; font-size:20px;">Shuffule</a>
 
 			<!-- 回転ボタン。 -->
 			<a href="javascript: rotate(0);" style="position:absolute; left:288px; top:96px; font-size:20px;">Rotate</a>
