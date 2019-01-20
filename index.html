@@ -419,6 +419,9 @@
 			record = "";
 			document.getElementById("record").innerHTML = record;
 			document.getElementById("answer").innerHTML = "";
+			
+			// 判定。
+			judge();
 		}
 
 		/** 揃っている状態に戻します。 */
@@ -488,7 +491,7 @@
 		{
 			// まず隠しておく。
 			document.getElementById("congratulations").style.visibility = "hidden";
-			
+
 			// 天面
 			if ( document.getElementById("tile-0").src != document.getElementById("tile-1").src ||
 				document.getElementById("tile-1").src != document.getElementById("tile-2").src ||
