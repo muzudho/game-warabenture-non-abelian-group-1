@@ -4,8 +4,12 @@
 	<meta charset="UTF-8">
 	<title>非可換な群 (MIT ライセンス / 改造・再配布許可)</title>
 	<script>
-		var scene = "title-0";
+		var scene = "";
 		var intervalFrame = 0;
+		
+		/** 問題指定。 */
+		var problemId = 1;
+		var stageLabel = "";
 		
 		/** ゲームの時計を開始。 */
 		function start_timer() {
@@ -49,6 +53,8 @@
 							document.getElementById("title-scene").style.visibility = "hidden";
 							document.getElementById("development-scene").style.visibility = "visible";
 							reset();
+							problem(problemId);
+							document.getElementById("stageLabel").innerHTML = stageLabel;							
 							scene = "finished";
 							break;
 					}
@@ -59,6 +65,8 @@
 
 		/** ゲーム画面の初期化。 */
 		function init() {
+			scene = "title-0";
+			intervalFrame = 0;
 			document.getElementById("title").style.left = "1920px";
 			document.getElementById("title").style.visibility = "hidden";
 			document.getElementById("title-scene").style.visibility = "hidden";
@@ -70,12 +78,6 @@
 			scene = "start-game";
 		}
 		
-		/** ゲームを終了します。 */
-		function finish_game() {
-			init();
-			scene = "title-0";
-		}
-
 		/** 4箇所を１つずらします。 */
 		function shift4(a, b, c, d) {
 			// 展開図
@@ -193,10 +195,58 @@
 					break;
 			}			
 		}
+
+		/** 単純なシャッフルではなく、キャラクター付けを行う。 */
+		function problem(id)
+		{
+			switch(id)
+			{
+				case 1:
+					// チルノ
+					// ランダムでハンドルを１回動かすだけ。
+					// 0~11
+					var handle = Math.round( Math.random()*11 );
+					rotate(handle);
+					break;
+
+				case 2:
+					// 宮古芳香
+					// ランダムでハンドルを１つ選び、それを 2つ進めるだけ。
+					// 0~11
+					var handle = Math.round( Math.random()*11 );
+					rotate(handle);
+					rotate(handle);
+					break;
+
+				case 3:
+					// サニーミルク
+					// アトランダムでハンドルを２つ選び、それを １つずつ進めるだけ。
+					
+					var verticalHandles = [0, 1, 6, 7];
+					var horizontalHandles = [2, 3, 8, 9];
+					
+					var handle0 = verticalHandles[ Math.round( Math.random()*3 )];
+					var handle1 = horizontalHandles[ Math.round( Math.random()*3 )];
+					
+					rotate(handle0);
+					rotate(handle1);
+					break;
+					
+				default:
+					for(i=0; i<id; i++)
+					{
+						// 0~11
+						var handle = Math.round( Math.random()*11 );
+						rotate(handle);
+					}
+					break;
+			}			
+		}
 		
 		/** 指定の回数、ランダムにキューブをねじります。 */
 		function shuffle(count)
-		{			
+		{
+			
 			for(i=0; i<count; i++)
 			{
 				// 0~11
@@ -260,6 +310,13 @@
 			document.getElementById("tile-22").src = "./img/tile-yellow-green.png";
 			document.getElementById("tile-23").src = "./img/tile-yellow-green.png";
 		}
+		
+		/** タイトル画面に戻る。 */
+		function exit(count)
+		{
+			init();
+			
+		}
 	</script>
 </head>
 <body style="background-color:white;" onload="init(); start_timer();">
@@ -267,8 +324,19 @@
 	<div style="position:absolute; top:0px; left:0px; width:1920px; height:1080px; background-color:#eeeeff;">
 		<img id="title" src="./img/title.png" style="visibility:hidden; position:absolute; top:0px;" />
 		<div id="title-scene" style="visibility:hidden; position:absolute; top:0px; left:0px; width:100%; height:100%; background-image:url('./img/window1.png');">
-			<a href="javascript: void(0);" style="position:absolute; top:570px; left:560px; font-size:64px;" onclick="start_game();">はじめる</a>
-			<a href="javascript: finish_game();" style="position:absolute; top:670px; left:560px; font-size:64px;">おわる</a>
+			<a href="javascript: problemId=1; stageLabel='チルノ レベル'; void(0);" style="position:absolute; left:560px; top:550px; font-size:32px;" onclick="start_game();">1.チルノ レベル</a>
+			<a href="javascript: problemId=2; stageLabel='宮古芳香 レベル'; void(0);" style="position:absolute; left:560px; top:590px; font-size:32px;" onclick="start_game();">2.宮古芳香 レベル</a>
+			<a href="javascript: problemId=3; stageLabel='サニーミルク レベル'; void(0);" style="position:absolute; left:560px; top:630px; font-size:32px;" onclick="start_game();">3.サニーミルク レベル</a>
+			<!-- 紅美鈴 -->
+			<a href="javascript: problemId=4; stageLabel='雲居一輪 レベル'; void(0);" style="position:absolute; left:560px; top:670px; font-size:32px;" onclick="start_game();">4.雲居一輪 レベル</a>
+			<a href="javascript: problemId=5; stageLabel='高麗野あうん レベル'; void(0);" style="position:absolute; left:560px; top:710px; font-size:32px;" onclick="start_game();">5.高麗野あうん　レベル</a>
+			<a href="javascript: problemId=6; stageLabel='ミスティア レベル'; void(0);" style="position:absolute; left:560px; top:750px; font-size:32px;" onclick="start_game();">6.ミスティア　レベル</a>
+			<a href="javascript: problemId=7; stageLabel='紅美鈴 レベル'; void(0);" style="position:absolute; left:960px; top:550px; font-size:32px;" onclick="start_game();">7.紅美鈴 レベル</a>
+			<a href="javascript: problemId=8; stageLabel='雲居一輪 レベル'; void(0);" style="position:absolute; left:960px; top:590px; font-size:32px;" onclick="start_game();">8.雲井一輪 レベル</a>
+			<a href="javascript: problemId=16; stageLabel='魔理沙 レベル'; void(0);" style="position:absolute; left:960px; top:630px; font-size:32px;" onclick="start_game();">9.魔理沙 レベル</a>
+			<a href="javascript: problemId=23; stageLabel='宇佐美菫子 レベル'; void(0);" style="position:absolute; left:960px; top:670px; font-size:32px;" onclick="start_game();">10.宇佐美菫子 レベル</a>
+			<a href="javascript: problemId=45; stageLabel='霊夢 レベル'; void(0);" style="position:absolute; left:960px; top:710px; font-size:32px;" onclick="start_game();">11.霊夢 レベル</a>
+			<a href="javascript: problemId=Math.round( Math.random()*200 ) + 100; stageLabel='八雲紫 レベル'; void(0);" style="position:absolute; left:960px; top:750px; font-size:32px;" onclick="start_game();">12.八雲紫 レベル</a>
 		</div>
 		<div id="development-scene" style="visibility:hidden; position:absolute; top:0px; left:0px; width:100%; height:100%; background-image:url('./img/development.png');">
 			<!--
@@ -363,18 +431,8 @@
 			<img id="tile-23" style="position:absolute; left:896px; top:704px; width:96px; height:96px;" />
 
 			<!-- ボタン。 -->
-			<a href="javascript: reset();" style="position:absolute; left:450px; top:8px; font-size:20px;">Reset</a>
-			<a href="javascript: reset(); shuffle(1);" style="position:absolute; left:530px; top:8px; font-size:20px;">Lv.1</a>
-			<a href="javascript: reset(); shuffle(2);" style="position:absolute; left:610px; top:8px; font-size:20px;">Lv.2</a>
-			<a href="javascript: reset(); shuffle(3);" style="position:absolute; left:690px; top:8px; font-size:20px;">Lv.3</a>
-			<a href="javascript: reset(); shuffle(4);" style="position:absolute; left:770px; top:8px; font-size:20px;">Lv.4</a>
-			<a href="javascript: reset(); shuffle(5);" style="position:absolute; left:850px; top:8px; font-size:20px;">Lv.5</a>
-			<a href="javascript: reset(); shuffle(6);" style="position:absolute; left:930px; top:8px; font-size:20px;">Lv.6</a>
-			<a href="javascript: reset(); shuffle(7);" style="position:absolute; left:1010px; top:8px; font-size:20px;">Lv.7</a>
-			<a href="javascript: reset(); shuffle(8);" style="position:absolute; left:1090px; top:8px; font-size:20px;">Lv.8</a>
-			<a href="javascript: reset(); shuffle(9);" style="position:absolute; left:1170px; top:8px; font-size:20px;">Lv.9</a>
-			<a href="javascript: reset(); shuffle(10);" style="position:absolute; left:1250px; top:8px; font-size:20px;">Lv.10</a>
-			<a href="javascript: reset(); shuffle(Math.round( Math.random()*1000 ) + 500);" style="position:absolute; left:1330px; top:8px; font-size:20px;">Lunatic.</a>
+			<a href="javascript: exit();" style="position:absolute; left:450px; top:8px; font-size:20px;">Exit</a>
+			<span id="stageLabel" style="position:absolute; left:500px; top:8px; font-size:20px;">ステージ ラベル</span>
 
 			<!-- 回転ボタン。 -->
 			<a href="javascript: rotate(0);" style="position:absolute; left:288px; top:96px; font-size:20px;">Rotate</a>
