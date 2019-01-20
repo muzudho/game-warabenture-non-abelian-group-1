@@ -75,8 +75,59 @@
 			scene = "title-0";
 		}
 
+		/** 4箇所を１つずらします。 */
+		function shift4(a, b, c, d) {
+			// 展開図
+			var temp = document.getElementById("tile-" + a).src;
+			document.getElementById("tile-" + a).src = document.getElementById("tile-" + b).src;
+			document.getElementById("tile-" + b).src = document.getElementById("tile-" + c).src;
+			document.getElementById("tile-" + c).src = document.getElementById("tile-" + d).src;
+			document.getElementById("tile-" + d).src = temp;
+			
+			// 立体図
+			var temp = document.getElementById("dia-" + a).src;
+			document.getElementById("dia-" + a).src = document.getElementById("dia-" + b).src;
+			document.getElementById("dia-" + b).src = document.getElementById("dia-" + c).src;
+			document.getElementById("dia-" + c).src = document.getElementById("dia-" + d).src;
+			document.getElementById("dia-" + d).src = temp;
+			
+			// ひしがた画像の調整
+			document.getElementById("dia-0").src = document.getElementById("dia-0").src.replace(/diamond-[ab]/, "diamond-c");
+			document.getElementById("dia-1").src = document.getElementById("dia-1").src.replace(/diamond-[ab]/, "diamond-c");
+			document.getElementById("dia-2").src = document.getElementById("dia-2").src.replace(/diamond-[ab]/, "diamond-c");
+			document.getElementById("dia-3").src = document.getElementById("dia-3").src.replace(/diamond-[ab]/, "diamond-c");
+			document.getElementById("dia-4").src = document.getElementById("dia-4").src.replace(/diamond-[ac]/, "diamond-b");
+			document.getElementById("dia-5").src = document.getElementById("dia-5").src.replace(/diamond-[ac]/, "diamond-b");
+			document.getElementById("dia-6").src = document.getElementById("dia-6").src.replace(/diamond-[ac]/, "diamond-b");
+			document.getElementById("dia-7").src = document.getElementById("dia-7").src.replace(/diamond-[ac]/, "diamond-b");
+			document.getElementById("dia-8").src = document.getElementById("dia-8").src.replace(/diamond-[bc]/, "diamond-a");
+			document.getElementById("dia-9").src = document.getElementById("dia-9").src.replace(/diamond-[bc]/, "diamond-a");
+			document.getElementById("dia-10").src = document.getElementById("dia-10").src.replace(/diamond-[bc]/, "diamond-a");
+			document.getElementById("dia-11").src = document.getElementById("dia-11").src.replace(/diamond-[bc]/, "diamond-a");
+			document.getElementById("dia-12").src = document.getElementById("dia-12").src.replace(/diamond-[ab]/, "diamond-c");
+			document.getElementById("dia-13").src = document.getElementById("dia-13").src.replace(/diamond-[ab]/, "diamond-c");
+			document.getElementById("dia-14").src = document.getElementById("dia-14").src.replace(/diamond-[ab]/, "diamond-c");
+			document.getElementById("dia-15").src = document.getElementById("dia-15").src.replace(/diamond-[ab]/, "diamond-c");
+			document.getElementById("dia-16").src = document.getElementById("dia-16").src.replace(/diamond-[bc]/, "diamond-a");
+			document.getElementById("dia-17").src = document.getElementById("dia-17").src.replace(/diamond-[bc]/, "diamond-a");
+			document.getElementById("dia-18").src = document.getElementById("dia-18").src.replace(/diamond-[bc]/, "diamond-a");
+			document.getElementById("dia-19").src = document.getElementById("dia-19").src.replace(/diamond-[bc]/, "diamond-a");
+			document.getElementById("dia-20").src = document.getElementById("dia-20").src.replace(/diamond-[ac]/, "diamond-b");
+			document.getElementById("dia-21").src = document.getElementById("dia-21").src.replace(/diamond-[ac]/, "diamond-b");
+			document.getElementById("dia-22").src = document.getElementById("dia-22").src.replace(/diamond-[ac]/, "diamond-b");
+			document.getElementById("dia-23").src = document.getElementById("dia-23").src.replace(/diamond-[ac]/, "diamond-b");
+		}
+		
 		/** キューブをひねります。 */
 		function rotate(number) {
+			switch(number)
+			{
+				case 0:
+					shift4(8, 0, 19, 20);
+					shift4(10, 2, 17, 22);
+					shift4(5, 4, 6, 7);
+					break;
+			}			
 		}
 		
 	</script>
@@ -155,6 +206,7 @@
 
 			<!-- 回転ボタン。 -->
 			<a href="javascript: rotate(0);" style="position:absolute; left:288px; top:96px; font-size:20px;">Rotate</a>
+			<!--
 			<a href="javascript: rotate(1);" style="position:absolute; left:384px; top:160px; font-size:20px;">Rotate</a>
 			<a href="javascript: rotate(2);" style="position:absolute; left:384px; top:256px; font-size:20px;">Rotate</a>
 			<a href="javascript: rotate(3);" style="position:absolute; left:384px; top:352px; font-size:20px;">Rotate</a>
@@ -166,6 +218,7 @@
 			<a href="javascript: rotate(9);" style="position:absolute; left:0px; top:256px; font-size:20px;">Rotate</a>
 			<a href="javascript: rotate(10);" style="position:absolute; left:0px; top:160px; font-size:20px;">Rotate</a>
 			<a href="javascript: rotate(11);" style="position:absolute; left:96px; top:96px; font-size:20px;">Rotate</a>
+			-->
 		</div>
 	</div>
 
