@@ -74,6 +74,11 @@
 			init();
 			scene = "title-0";
 		}
+
+		/** キューブをひねります。 */
+		function rotate(number) {
+		}
+		
 	</script>
 </head>
 <body style="background-color:white;" onload="init(); start_timer();">
@@ -147,6 +152,20 @@
 			<img id="tile-21" src="./img/tile-yellow-green.png" style="position:absolute; left:896px; top:576px; width:96px; height:96px;" />
 			<img id="tile-22" src="./img/tile-yellow-green.png" style="position:absolute; left:768px; top:704px; width:96px; height:96px;" />
 			<img id="tile-23" src="./img/tile-yellow-green.png" style="position:absolute; left:896px; top:704px; width:96px; height:96px;" />
+
+			<!-- 回転ボタン。 -->
+			<a href="javascript: rotate(0);" style="position:absolute; left:288px; top:96px; font-size:20px;">Rotate</a>
+			<a href="javascript: rotate(1);" style="position:absolute; left:384px; top:160px; font-size:20px;">Rotate</a>
+			<a href="javascript: rotate(2);" style="position:absolute; left:384px; top:256px; font-size:20px;">Rotate</a>
+			<a href="javascript: rotate(3);" style="position:absolute; left:384px; top:352px; font-size:20px;">Rotate</a>
+			<a href="javascript: rotate(4);" style="position:absolute; left:320px; top:448px; font-size:20px;">Rotate</a>
+			<a href="javascript: rotate(5);" style="position:absolute; left:224px; top:480px; font-size:20px;">Rotate</a>
+			<a href="javascript: rotate(6);" style="position:absolute; left:160px; top:480px; font-size:20px;">Rotate</a>
+			<a href="javascript: rotate(7);" style="position:absolute; left:64px; top:448px; font-size:20px;">Rotate</a>
+			<a href="javascript: rotate(8);" style="position:absolute; left:0px; top:352px; font-size:20px;">Rotate</a>
+			<a href="javascript: rotate(9);" style="position:absolute; left:0px; top:256px; font-size:20px;">Rotate</a>
+			<a href="javascript: rotate(10);" style="position:absolute; left:0px; top:160px; font-size:20px;">Rotate</a>
+			<a href="javascript: rotate(11);" style="position:absolute; left:96px; top:96px; font-size:20px;">Rotate</a>
 		</div>
 	</div>
 
