@@ -216,10 +216,9 @@
 			judge();
 		}
 		
-		/** 解答を作成する。 */
-		function addAnswer(handle)
+		/** 反対方向のハンドルを取得。 */
+		function getReversedHandle(handle)
 		{
-			// 解答は、反対方向に回す。
 			var reverse;
 			switch(handle)
 			{
@@ -260,6 +259,14 @@
 					reverse = 4;
 					break;
 			}
+			return reverse;
+		}
+		
+		/** 解答を作成する。 */
+		function addAnswer(handle)
+		{
+			// 解答は、反対方向に回す。
+			var reverse = getReversedHandle(handle);
 			
 			// 解答の作成。
 			answerList.push(reverse);
@@ -330,6 +337,45 @@
 					break;
 
 				case 5:
+					// 鈴瑚
+					// まず、２つの軸を選ぶ。あとは 0、1、 と進めて、最後は 0 を逆回転。
+										
+					var verticalHandles = [0, 1, 6, 7];
+					var horizontalHandles = [2, 3, 8, 9];
+					var dialHandles = [4, 5, 10, 11];
+					
+					var handle0;
+					var handle1;
+					
+					// 0～2
+					switch(Math.round( Math.random()*2 ))
+					{
+						case 0:
+							handle0 = verticalHandles[ Math.round( Math.random()*3 )];
+							handle1 = horizontalHandles[ Math.round( Math.random()*3 )];
+							break;
+						case 1:
+							handle0 = verticalHandles[ Math.round( Math.random()*3 )];
+							handle1 = dialHandles[ Math.round( Math.random()*3 )];
+							break;
+						default:
+							handle0 = horizontalHandles[ Math.round( Math.random()*3 )];
+							handle1 = dialHandles[ Math.round( Math.random()*3 )];
+							break;
+					}
+					
+					// 0
+					rotate(handle0);
+					addAnswer(handle0);
+					// 1
+					rotate(handle1);
+					addAnswer(handle1);
+					// 0 を逆回転。					
+					rotate(getReversedHandle(handle0));
+					addAnswer(getReversedHandle(handle0));
+					break;
+
+				case 6:
 					// 紅美鈴
 					// まず、２つの軸を選ぶ。あとは交互に回すだけ。
 										
@@ -565,10 +611,10 @@
 			<a href="javascript: problemId=2; stageLabel='宮古芳香 レベル 「関節が固い」'; void(0);" style="position:absolute; left:560px; top:590px; font-size:32px;" onclick="start_game();">2.宮古芳香 レベル</a>
 			<a href="javascript: problemId=3; stageLabel='サニーミルク レベル 「縦回転と 横回転に順番があるのね」'; void(0);" style="position:absolute; left:560px; top:630px; font-size:32px;" onclick="start_game();">3.サニーミルク レベル</a>
 			<a href="javascript: problemId=4; stageLabel='高麗野あうん レベル 「回す方向は３つあるのですよ」'; void(0);" style="position:absolute; left:560px; top:670px; font-size:32px;" onclick="start_game();">4.高麗野あうん レベル</a>
-			<a href="javascript: problemId=5; stageLabel='紅美鈴 レベル 「１、２、１、２の呼吸です！」'; void(0);" style="position:absolute; left:560px; top:710px; font-size:32px;" onclick="start_game();">5.紅美鈴　レベル</a>
+			<a href="javascript: problemId=5; stageLabel='鈴瑚 レベル 「両手で 団子３個食ってる間に終わる」'; void(0);" style="position:absolute; left:560px; top:710px; font-size:32px;" onclick="start_game();">5.鈴瑚　レベル</a>
+			<a href="javascript: problemId=6; stageLabel='紅美鈴 レベル 「１、２、１、２の呼吸です！」'; void(0);" style="position:absolute; left:560px; top:750px; font-size:32px;" onclick="start_game();">6.紅美鈴　レベル</a>
 			<!-- TODO もっと簡単なレベルを用意せな……☆ -->
 			<!--
-			<a href="javascript: problemId=6; stageLabel='ミスティア レベル'; void(0);" style="position:absolute; left:560px; top:750px; font-size:32px;" onclick="start_game();">6.ミスティア　レベル</a>
 			<a href="javascript: problemId=7; stageLabel='紅美鈴 レベル'; void(0);" style="position:absolute; left:960px; top:550px; font-size:32px;" onclick="start_game();">7.紅美鈴 レベル</a>
 			<a href="javascript: problemId=8; stageLabel='雲居一輪 レベル'; void(0);" style="position:absolute; left:960px; top:590px; font-size:32px;" onclick="start_game();">8.雲井一輪 レベル</a>
 			<a href="javascript: problemId=16; stageLabel='魔理沙 レベル'; void(0);" style="position:absolute; left:960px; top:630px; font-size:32px;" onclick="start_game();">9.魔理沙 レベル</a>
