@@ -11,6 +11,10 @@
 		var problemId = 1;
 		var stageLabel = "";
 		
+		/** 棋譜。 */
+		var record = "";
+		var answerList = [];
+		
 		/** ゲームの時計を開始。 */
 		function start_timer() {
 			setInterval(
@@ -54,7 +58,7 @@
 							document.getElementById("development-scene").style.visibility = "visible";
 							reset();
 							problem(problemId);
-							document.getElementById("stageLabel").innerHTML = stageLabel;							
+							document.getElementById("stageLabel").innerHTML = stageLabel;
 							scene = "finished";
 							break;
 					}
@@ -71,6 +75,11 @@
 			document.getElementById("title").style.visibility = "hidden";
 			document.getElementById("title-scene").style.visibility = "hidden";
 			document.getElementById("development-scene").style.visibility = "hidden";
+			document.getElementById("congratulations").style.visibility = "hidden";
+			
+			// 棋譜。
+			record = "";
+			document.getElementById("record").innerHTML = record;
 		}
 		
 		/** ゲームを開始します。 */
@@ -130,8 +139,8 @@
 			 7     4
 			   6 5
 		 */
-		function rotate(number) {
-			switch(number)
+		function rotate(handle) {
+			switch(handle)
 			{
 				case 0:
 					shift4(8, 0, 19, 20);
@@ -193,12 +202,71 @@
 					shift4(4, 16, 12, 8);
 					shift4(2, 0, 1, 3);
 					break;
-			}			
+			}
+			
+			// 棋譜。
+			record += " " + handle;
+			document.getElementById("record").innerHTML = record;
+
+			// 勝利判定。
+			judge();
+		}
+		
+		/** 解答を作成する。 */
+		function addAnswer(handle)
+		{
+			// 解答は、反対方向に回す。
+			var reverse;
+			switch(handle)
+			{
+				case 0:
+					reverse = 7;
+					break;
+				case 1:
+					reverse = 6;
+					break;
+				case 2:
+					reverse = 9;
+					break;
+				case 3:
+					reverse = 8;
+					break;
+				case 4:
+					reverse = 11;
+					break;
+				case 5:
+					reverse = 10;
+					break;
+				case 6:
+					reverse = 1;
+					break;
+				case 7:
+					reverse = 0;
+					break;
+				case 8:
+					reverse = 3;
+					break;
+				case 9:
+					reverse = 2;
+					break;
+				case 10:
+					reverse = 5;
+					break;
+				case 11:
+					reverse = 4;
+					break;
+			}
+			
+			// 解答の作成。
+			answerList.push(reverse);
 		}
 		
 		/** 単純なシャッフルではなく、キャラクター付けを行う。 */
 		function problem(id)
 		{
+			// 解答作成のためにクリア。
+			answerList = [];
+		
 			switch(id)
 			{
 				case 1:
@@ -207,6 +275,7 @@
 					// 0~11
 					var handle = Math.round( Math.random()*11 );
 					rotate(handle);
+					addAnswer(handle);
 					break;
 
 				case 2:
@@ -215,7 +284,9 @@
 					// 0~11
 					var handle = Math.round( Math.random()*11 );
 					rotate(handle);
+					addAnswer(handle);
 					rotate(handle);
+					addAnswer(handle);
 					break;
 
 				case 3:
@@ -229,7 +300,9 @@
 					var handle1 = horizontalHandles[ Math.round( Math.random()*3 )];
 					
 					rotate(handle0);
+					addAnswer(handle0);
 					rotate(handle1);
+					addAnswer(handle1);
 					break;
 
 				case 4:
@@ -245,8 +318,11 @@
 					var handle2 = dialHandles[ Math.round( Math.random()*3 )];
 					
 					rotate(handle0);
+					addAnswer(handle0);
 					rotate(handle1);
+					addAnswer(handle1);
 					rotate(handle2);
+					addAnswer(handle2);
 					break;
 
 				case 5:
@@ -278,9 +354,13 @@
 					}
 					
 					rotate(handle0);
+					addAnswer(handle0);
 					rotate(handle1);
+					addAnswer(handle1);
 					rotate(handle0);
+					addAnswer(handle0);
 					rotate(handle1);
+					addAnswer(handle1);
 					break;
 					
 				default:
@@ -289,9 +369,14 @@
 						// 0~11
 						var handle = Math.round( Math.random()*11 );
 						rotate(handle);
+						addAnswer(handle);
 					}
 					break;
 			}
+			
+			// 棋譜クリアー。
+			record = "";
+			document.getElementById("record").innerHTML = record;
 			
 			saveProblem();
 		}
@@ -328,7 +413,12 @@
 			{
 				document.getElementById("dia-" + i).src = diaSrcSave[i];
 				document.getElementById("tile-" + i).src = tileSrcSave[i];
-			}			
+			}
+			
+			// 棋譜。
+			record = "";
+			document.getElementById("record").innerHTML = record;
+			document.getElementById("answer").innerHTML = "";
 		}
 
 		/** 揃っている状態に戻します。 */
@@ -390,8 +480,72 @@
 		/** タイトル画面に戻る。 */
 		function exit(count)
 		{
-			init();
+			init();			
+		}
+		
+		/** 勝利判定。 */
+		function judge()
+		{
+			// まず隠しておく。
+			document.getElementById("congratulations").style.visibility = "hidden";
 			
+			// 天面
+			if ( document.getElementById("tile-0").src != document.getElementById("tile-1").src ||
+				document.getElementById("tile-1").src != document.getElementById("tile-2").src ||
+				document.getElementById("tile-2").src != document.getElementById("tile-3").src) {
+				return;
+			}
+			
+			// 横面１
+			if ( document.getElementById("tile-4").src != document.getElementById("tile-5").src ||
+				document.getElementById("tile-5").src != document.getElementById("tile-6").src ||
+				document.getElementById("tile-6").src != document.getElementById("tile-7").src) {
+				return;
+			}
+			
+			// 横面２
+			if ( document.getElementById("tile-8").src != document.getElementById("tile-9").src ||
+				document.getElementById("tile-9").src != document.getElementById("tile-10").src ||
+				document.getElementById("tile-10").src != document.getElementById("tile-11").src) {
+				return;
+			}
+			
+			// 横面３
+			if ( document.getElementById("tile-12").src != document.getElementById("tile-13").src ||
+				document.getElementById("tile-13").src != document.getElementById("tile-14").src ||
+				document.getElementById("tile-14").src != document.getElementById("tile-15").src) {
+				return;
+			}
+			
+			// 横面４
+			if ( document.getElementById("tile-16").src != document.getElementById("tile-17").src ||
+				document.getElementById("tile-17").src != document.getElementById("tile-18").src ||
+				document.getElementById("tile-18").src != document.getElementById("tile-19").src) {
+				return;
+			}
+			
+			// 地面
+			if ( document.getElementById("tile-20").src != document.getElementById("tile-21").src ||
+				document.getElementById("tile-21").src != document.getElementById("tile-22").src ||
+				document.getElementById("tile-22").src != document.getElementById("tile-23").src) {
+				return;
+			}
+		
+			// ６面で それぞれ４タイル一致していれば。
+			document.getElementById("congratulations").style.visibility = "visible";
+		}
+		
+		/** 解答を見る。 */
+		function showAnswer()
+		{
+			let answer = "";
+		
+			// 棋譜に、回答を逆さに入れる。
+			for(i=answerList.length-1; -1<i; i--)
+			{
+				answer += " " + answerList[i];
+			}
+			document.getElementById("answer").innerHTML = answer;
 		}
 	</script>
 </head>
@@ -403,16 +557,18 @@
 			<a href="javascript: problemId=1; stageLabel='チルノ レベル 「１度しか回してないのでは」'; void(0);" style="position:absolute; left:560px; top:550px; font-size:32px;" onclick="start_game();">1.チルノ レベル</a>
 			<a href="javascript: problemId=2; stageLabel='宮古芳香 レベル 「関節が固い」'; void(0);" style="position:absolute; left:560px; top:590px; font-size:32px;" onclick="start_game();">2.宮古芳香 レベル</a>
 			<a href="javascript: problemId=3; stageLabel='サニーミルク レベル 「縦回転と 横回転に順番があるのね」'; void(0);" style="position:absolute; left:560px; top:630px; font-size:32px;" onclick="start_game();">3.サニーミルク レベル</a>
-			<a href="javascript: problemId=4; stageLabel='高麗野あうん レベル 「回す方向は３つあるのでは」'; void(0);" style="position:absolute; left:560px; top:670px; font-size:32px;" onclick="start_game();">4.高麗野あうん レベル</a>
+			<a href="javascript: problemId=4; stageLabel='高麗野あうん レベル 「回す方向は３つあるのですよ」'; void(0);" style="position:absolute; left:560px; top:670px; font-size:32px;" onclick="start_game();">4.高麗野あうん レベル</a>
 			<a href="javascript: problemId=5; stageLabel='紅美鈴 レベル 「１、２、１、２の呼吸です！」'; void(0);" style="position:absolute; left:560px; top:710px; font-size:32px;" onclick="start_game();">5.紅美鈴　レベル</a>
-			<!-- 雲居一輪 レベル -->
+			<!-- TODO もっと簡単なレベルを用意せな……☆ -->
+			<!--
 			<a href="javascript: problemId=6; stageLabel='ミスティア レベル'; void(0);" style="position:absolute; left:560px; top:750px; font-size:32px;" onclick="start_game();">6.ミスティア　レベル</a>
 			<a href="javascript: problemId=7; stageLabel='紅美鈴 レベル'; void(0);" style="position:absolute; left:960px; top:550px; font-size:32px;" onclick="start_game();">7.紅美鈴 レベル</a>
 			<a href="javascript: problemId=8; stageLabel='雲居一輪 レベル'; void(0);" style="position:absolute; left:960px; top:590px; font-size:32px;" onclick="start_game();">8.雲井一輪 レベル</a>
 			<a href="javascript: problemId=16; stageLabel='魔理沙 レベル'; void(0);" style="position:absolute; left:960px; top:630px; font-size:32px;" onclick="start_game();">9.魔理沙 レベル</a>
 			<a href="javascript: problemId=23; stageLabel='宇佐美菫子 レベル'; void(0);" style="position:absolute; left:960px; top:670px; font-size:32px;" onclick="start_game();">10.宇佐美菫子 レベル</a>
 			<a href="javascript: problemId=45; stageLabel='霊夢 レベル'; void(0);" style="position:absolute; left:960px; top:710px; font-size:32px;" onclick="start_game();">11.霊夢 レベル</a>
-			<a href="javascript: problemId=Math.round( Math.random()*200 ) + 100; stageLabel='八雲紫 レベル'; void(0);" style="position:absolute; left:960px; top:750px; font-size:32px;" onclick="start_game();">12.八雲紫 レベル</a>
+			-->
+			<a href="javascript: problemId=Math.round( Math.random()*40 ) + 40; stageLabel='八雲紫 レベル 「ランダムな問題に　美しさは感じないもの」'; void(0);" style="position:absolute; left:960px; top:750px; font-size:32px;" onclick="start_game();">12.八雲紫 レベル</a>
 		</div>
 		<div id="development-scene" style="visibility:hidden; position:absolute; top:0px; left:0px; width:100%; height:100%; background-image:url('./img/development.png');">
 			<!--
@@ -506,24 +662,30 @@
 			<img id="tile-22" style="position:absolute; left:768px; top:704px; width:96px; height:96px;" />
 			<img id="tile-23" style="position:absolute; left:896px; top:704px; width:96px; height:96px;" />
 
+			<!-- ボタンの下に表示する。 -->
+			<img id="congratulations" src="./img/congratulations.png" style="visibility:hidden; position:absolute; left:0px; top:0px;" />
+			
 			<!-- ボタン。 -->
 			<a href="javascript: restoreProblem();" style="position:absolute; left:420px; top:8px; font-size:20px;">再挑戦</a>
 			<a href="javascript: exit();" style="position:absolute; left:500px; top:8px; font-size:20px;">Exit</a>
+			<a href="javascript: showAnswer();" style="position:absolute; left:500px; top:36px; font-size:20px;">解答を見る</a>
 			<span id="stageLabel" style="position:absolute; left:550px; top:4px; font-size:28px; font-weight:bold;">ステージ ラベル</span>
+			<span id="record" style="position:absolute; left:512px; top:832px; width:1376px; height:80px; font-size:28px;"></span>
+			<span id="answer" style="position:absolute; left:512px; top:912px; width:1376px; height:80px; font-size:28px; color:orange;"></span>
 
 			<!-- 回転ボタン。 -->
-			<a href="javascript: rotate(0);" style="position:absolute; left:288px; top:96px; font-size:20px;">Rotate</a>
-			<a href="javascript: rotate(1);" style="position:absolute; left:384px; top:160px; font-size:20px;">Rotate</a>
-			<a href="javascript: rotate(2);" style="position:absolute; left:384px; top:256px; font-size:20px;">Rotate</a>
-			<a href="javascript: rotate(3);" style="position:absolute; left:384px; top:352px; font-size:20px;">Rotate</a>
-			<a href="javascript: rotate(4);" style="position:absolute; left:320px; top:448px; font-size:20px;">Rotate</a>
-			<a href="javascript: rotate(5);" style="position:absolute; left:224px; top:480px; font-size:20px;">Rotate</a>
-			<a href="javascript: rotate(6);" style="position:absolute; left:160px; top:480px; font-size:20px;">Rotate</a>
-			<a href="javascript: rotate(7);" style="position:absolute; left:64px; top:448px; font-size:20px;">Rotate</a>
-			<a href="javascript: rotate(8);" style="position:absolute; left:0px; top:352px; font-size:20px;">Rotate</a>
-			<a href="javascript: rotate(9);" style="position:absolute; left:0px; top:256px; font-size:20px;">Rotate</a>
-			<a href="javascript: rotate(10);" style="position:absolute; left:0px; top:160px; font-size:20px;">Rotate</a>
-			<a href="javascript: rotate(11);" style="position:absolute; left:96px; top:96px; font-size:20px;">Rotate</a>
+			<a href="javascript: rotate(0);" style="position:absolute; left:288px; top:96px; font-size:20px;">Rotate.0</a>
+			<a href="javascript: rotate(1);" style="position:absolute; left:384px; top:160px; font-size:20px;">Rot.1</a>
+			<a href="javascript: rotate(2);" style="position:absolute; left:384px; top:256px; font-size:20px;">Rot.2</a>
+			<a href="javascript: rotate(3);" style="position:absolute; left:384px; top:352px; font-size:20px;">Rot.3</a>
+			<a href="javascript: rotate(4);" style="position:absolute; left:320px; top:448px; font-size:20px;">Rot.4</a>
+			<a href="javascript: rotate(5);" style="position:absolute; left:224px; top:480px; font-size:20px;">Rot.5</a>
+			<a href="javascript: rotate(6);" style="position:absolute; left:160px; top:480px; font-size:20px;">Rot.6</a>
+			<a href="javascript: rotate(7);" style="position:absolute; left:64px; top:448px; font-size:20px;">Rot.7</a>
+			<a href="javascript: rotate(8);" style="position:absolute; left:0px; top:352px; font-size:20px;">Rot.8</a>
+			<a href="javascript: rotate(9);" style="position:absolute; left:0px; top:256px; font-size:20px;">Rot.9</a>
+			<a href="javascript: rotate(10);" style="position:absolute; left:0px; top:160px; font-size:20px;">Rot.10</a>
+			<a href="javascript: rotate(11);" style="position:absolute; left:96px; top:96px; font-size:20px;">Rot.11</a>
 		</div>
 	</div>
 
