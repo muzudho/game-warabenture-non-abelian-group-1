@@ -48,6 +48,7 @@
 							document.getElementById("title").style.visibility = "hidden";
 							document.getElementById("title-scene").style.visibility = "hidden";
 							document.getElementById("development-scene").style.visibility = "visible";
+							reset();
 							scene = "finished";
 							break;
 					}
@@ -193,13 +194,9 @@
 			}			
 		}
 		
-		/** ランダムな回数、ランダムにキューブをねじります。 */
-		function shuffule()
-		{
-			// 0~100
-			var count = Math.round( Math.random()*100 );
-			count += 50;
-			
+		/** 指定の回数、ランダムにキューブをねじります。 */
+		function shuffle(count)
+		{			
 			for(i=0; i<count; i++)
 			{
 				// 0~11
@@ -207,8 +204,62 @@
 				rotate(handle);
 			}
 		}
+
+		/** 揃っている状態に戻します。 */
+		function reset()
+		{
+			// フロント、バック。
+			document.getElementById("dia-0").src = "./img/diamond-c-orange.png";
+			document.getElementById("dia-1").src = "./img/diamond-c-orange.png";
+			document.getElementById("dia-2").src = "./img/diamond-c-orange.png";
+			document.getElementById("dia-3").src = "./img/diamond-c-orange.png";
+			document.getElementById("dia-4").src = "./img/diamond-b-violet.png";
+			document.getElementById("dia-5").src = "./img/diamond-b-violet.png";
+			document.getElementById("dia-6").src = "./img/diamond-b-violet.png";
+			document.getElementById("dia-7").src = "./img/diamond-b-violet.png";
+			document.getElementById("dia-8").src = "./img/diamond-a-pink.png";
+			document.getElementById("dia-9").src = "./img/diamond-a-pink.png";
+			document.getElementById("dia-10").src = "./img/diamond-a-pink.png";
+			document.getElementById("dia-11").src = "./img/diamond-a-pink.png";
+			document.getElementById("dia-12").src = "./img/diamond-c-sky-blue.png";
+			document.getElementById("dia-13").src = "./img/diamond-c-sky-blue.png";
+			document.getElementById("dia-14").src = "./img/diamond-c-sky-blue.png";
+			document.getElementById("dia-15").src = "./img/diamond-c-sky-blue.png";
+			document.getElementById("dia-16").src = "./img/diamond-a-gray.png";
+			document.getElementById("dia-17").src = "./img/diamond-a-gray.png";
+			document.getElementById("dia-18").src = "./img/diamond-a-gray.png";
+			document.getElementById("dia-19").src = "./img/diamond-a-gray.png";
+			document.getElementById("dia-20").src = "./img/diamond-b-yellow-green.png";
+			document.getElementById("dia-21").src = "./img/diamond-b-yellow-green.png";
+			document.getElementById("dia-22").src = "./img/diamond-b-yellow-green.png";
+			document.getElementById("dia-23").src = "./img/diamond-b-yellow-green.png";
 		
-		
+			// 展開図。
+			document.getElementById("tile-0").src = "./img/tile-orange.png";
+			document.getElementById("tile-1").src = "./img/tile-orange.png";
+			document.getElementById("tile-2").src = "./img/tile-orange.png";
+			document.getElementById("tile-3").src = "./img/tile-orange.png";
+			document.getElementById("tile-4").src = "./img/tile-violet.png";
+			document.getElementById("tile-5").src = "./img/tile-violet.png";
+			document.getElementById("tile-6").src = "./img/tile-violet.png";
+			document.getElementById("tile-7").src = "./img/tile-violet.png";
+			document.getElementById("tile-8").src = "./img/tile-pink.png";
+			document.getElementById("tile-9").src = "./img/tile-pink.png";
+			document.getElementById("tile-10").src = "./img/tile-pink.png";
+			document.getElementById("tile-11").src = "./img/tile-pink.png";
+			document.getElementById("tile-12").src = "./img/tile-sky-blue.png";
+			document.getElementById("tile-13").src = "./img/tile-sky-blue.png";
+			document.getElementById("tile-14").src = "./img/tile-sky-blue.png";
+			document.getElementById("tile-15").src = "./img/tile-sky-blue.png";
+			document.getElementById("tile-16").src = "./img/tile-gray.png";
+			document.getElementById("tile-17").src = "./img/tile-gray.png";
+			document.getElementById("tile-18").src = "./img/tile-gray.png";
+			document.getElementById("tile-19").src = "./img/tile-gray.png";
+			document.getElementById("tile-20").src = "./img/tile-yellow-green.png";
+			document.getElementById("tile-21").src = "./img/tile-yellow-green.png";
+			document.getElementById("tile-22").src = "./img/tile-yellow-green.png";
+			document.getElementById("tile-23").src = "./img/tile-yellow-green.png";
+		}
 	</script>
 </head>
 <body style="background-color:white;" onload="init(); start_timer();">
@@ -231,20 +282,20 @@
 				22       13
 				   23 15
 			-->
-			<img id="dia-8" src="./img/diamond-a-pink.png" style="position:absolute; left:160px; top:128px; width:128px; height:64px;" />
-			<img id="dia-9" src="./img/diamond-a-pink.png" style="position:absolute; left:256px; top:176px; width:128px; height:64px;" />
-			<img id="dia-10" src="./img/diamond-a-pink.png" style="position:absolute; left: 64px; top:176px; width:128px; height:64px;" />
-			<img id="dia-11" src="./img/diamond-a-pink.png" style="position:absolute; left:160px; top:224px; width:128px; height:64px;" />
+			<img id="dia-8" style="position:absolute; left:160px; top:128px; width:128px; height:64px;" />
+			<img id="dia-9" style="position:absolute; left:256px; top:176px; width:128px; height:64px;" />
+			<img id="dia-10" style="position:absolute; left: 64px; top:176px; width:128px; height:64px;" />
+			<img id="dia-11" style="position:absolute; left:160px; top:224px; width:128px; height:64px;" />
 
-			<img id="dia-20" src="./img/diamond-b-yellow-green.png" style="position:absolute; left: 64px; top:240px; width:64px; height:96px;" />
-			<img id="dia-21" src="./img/diamond-b-yellow-green.png" style="position:absolute; left:160px; top:288px; width:64px; height:96px;" />
-			<img id="dia-22" src="./img/diamond-b-yellow-green.png" style="position:absolute; left: 64px; top:336px; width:64px; height:96px;" />
-			<img id="dia-23" src="./img/diamond-b-yellow-green.png" style="position:absolute; left:160px; top:384px; width:64px; height:96px;" />
+			<img id="dia-20" style="position:absolute; left: 64px; top:240px; width:64px; height:96px;" />
+			<img id="dia-21" style="position:absolute; left:160px; top:288px; width:64px; height:96px;" />
+			<img id="dia-22" style="position:absolute; left: 64px; top:336px; width:64px; height:96px;" />
+			<img id="dia-23" style="position:absolute; left:160px; top:384px; width:64px; height:96px;" />
 
-			<img id="dia-14" src="./img/diamond-c-sky-blue.png" style="position:absolute; left:224px; top:288px; width:64px; height:96px;" />
-			<img id="dia-12" src="./img/diamond-c-sky-blue.png" style="position:absolute; left:320px; top:240px; width:64px; height:96px;" />
-			<img id="dia-15" src="./img/diamond-c-sky-blue.png" style="position:absolute; left:224px; top:384px; width:64px; height:96px;" />
-			<img id="dia-13" src="./img/diamond-c-sky-blue.png" style="position:absolute; left:320px; top:336px; width:64px; height:96px;" />
+			<img id="dia-14" style="position:absolute; left:224px; top:288px; width:64px; height:96px;" />
+			<img id="dia-12" style="position:absolute; left:320px; top:240px; width:64px; height:96px;" />
+			<img id="dia-15" style="position:absolute; left:224px; top:384px; width:64px; height:96px;" />
+			<img id="dia-13" style="position:absolute; left:320px; top:336px; width:64px; height:96px;" />
 			
 			<!--
 				バック
@@ -257,20 +308,20 @@
 				16      19
 				    18
 			-->
-			<img id="dia-3" src="./img/diamond-c-orange.png" style="position:absolute; left: 64px; top:688px; width:64px; height:96px;" />
-			<img id="dia-2" src="./img/diamond-c-orange.png" style="position:absolute; left:160px; top:640px; width:64px; height:96px;" />
-			<img id="dia-1" src="./img/diamond-c-orange.png" style="position:absolute; left: 64px; top:784px; width:64px; height:96px;" />
-			<img id="dia-0" src="./img/diamond-c-orange.png" style="position:absolute; left:160px; top:736px; width:64px; height:96px;" />
+			<img id="dia-3" style="position:absolute; left: 64px; top:688px; width:64px; height:96px;" />
+			<img id="dia-2" style="position:absolute; left:160px; top:640px; width:64px; height:96px;" />
+			<img id="dia-1" style="position:absolute; left: 64px; top:784px; width:64px; height:96px;" />
+			<img id="dia-0" style="position:absolute; left:160px; top:736px; width:64px; height:96px;" />
 
-			<img id="dia-5" src="./img/diamond-b-violet.png" style="position:absolute; left:224px; top:640px; width:64px; height:96px;" />
-			<img id="dia-7" src="./img/diamond-b-violet.png" style="position:absolute; left:320px; top:688px; width:64px; height:96px;" />
-			<img id="dia-4" src="./img/diamond-b-violet.png" style="position:absolute; left:224px; top:736px; width:64px; height:96px;" />
-			<img id="dia-6" src="./img/diamond-b-violet.png" style="position:absolute; left:320px; top:784px; width:64px; height:96px;" />
+			<img id="dia-5" style="position:absolute; left:224px; top:640px; width:64px; height:96px;" />
+			<img id="dia-7" style="position:absolute; left:320px; top:688px; width:64px; height:96px;" />
+			<img id="dia-4" style="position:absolute; left:224px; top:736px; width:64px; height:96px;" />
+			<img id="dia-6" style="position:absolute; left:320px; top:784px; width:64px; height:96px;" />
 
-			<img id="dia-17" src="./img/diamond-a-gray.png" style="position:absolute; left:160px; top:832px; width:128px; height:64px;" />
-			<img id="dia-19" src="./img/diamond-a-gray.png" style="position:absolute; left:256px; top:880px; width:128px; height:64px;" />
-			<img id="dia-16" src="./img/diamond-a-gray.png" style="position:absolute; left: 64px; top:880px; width:128px; height:64px;" />
-			<img id="dia-18" src="./img/diamond-a-gray.png" style="position:absolute; left:160px; top:928px; width:128px; height:64px;" />
+			<img id="dia-17" style="position:absolute; left:160px; top:832px; width:128px; height:64px;" />
+			<img id="dia-19" style="position:absolute; left:256px; top:880px; width:128px; height:64px;" />
+			<img id="dia-16" style="position:absolute; left: 64px; top:880px; width:128px; height:64px;" />
+			<img id="dia-18" style="position:absolute; left:160px; top:928px; width:128px; height:64px;" />
 			
 			<!--
 				展開図
@@ -281,38 +332,49 @@
 				      20 21
 					  22 23
 			-->
-			<img id="tile-0" src="./img/tile-orange.png" style="position:absolute; left:768px; top:64px; width:96px; height:96px;" />
-			<img id="tile-1" src="./img/tile-orange.png" style="position:absolute; left:896px; top:64px; width:96px; height:96px;" />
-			<img id="tile-2" src="./img/tile-orange.png" style="position:absolute; left:768px; top:192px; width:96px; height:96px;" />
-			<img id="tile-3" src="./img/tile-orange.png" style="position:absolute; left:896px; top:192px; width:96px; height:96px;" />
+			<img id="tile-0" style="position:absolute; left:768px; top:64px; width:96px; height:96px;" />
+			<img id="tile-1" style="position:absolute; left:896px; top:64px; width:96px; height:96px;" />
+			<img id="tile-2" style="position:absolute; left:768px; top:192px; width:96px; height:96px;" />
+			<img id="tile-3" style="position:absolute; left:896px; top:192px; width:96px; height:96px;" />
 
-			<img id="tile-4" src="./img/tile-violet.png" style="position:absolute; left:512px; top:320px; width:96px; height:96px;" />
-			<img id="tile-5" src="./img/tile-violet.png" style="position:absolute; left:640px; top:320px; width:96px; height:96px;" />
-			<img id="tile-6" src="./img/tile-violet.png" style="position:absolute; left:512px; top:448px; width:96px; height:96px;" />
-			<img id="tile-7" src="./img/tile-violet.png" style="position:absolute; left:640px; top:448px; width:96px; height:96px;" />
+			<img id="tile-4" style="position:absolute; left:512px; top:320px; width:96px; height:96px;" />
+			<img id="tile-5" style="position:absolute; left:640px; top:320px; width:96px; height:96px;" />
+			<img id="tile-6" style="position:absolute; left:512px; top:448px; width:96px; height:96px;" />
+			<img id="tile-7" style="position:absolute; left:640px; top:448px; width:96px; height:96px;" />
 
-			<img id="tile-8" src="./img/tile-pink.png" style="position:absolute; left:768px; top:320px; width:96px; height:96px;" />
-			<img id="tile-9" src="./img/tile-pink.png" style="position:absolute; left:896px; top:320px; width:96px; height:96px;" />
-			<img id="tile-10" src="./img/tile-pink.png" style="position:absolute; left:768px; top:448px; width:96px; height:96px;" />
-			<img id="tile-11" src="./img/tile-pink.png" style="position:absolute; left:896px; top:448px; width:96px; height:96px;" />
+			<img id="tile-8" style="position:absolute; left:768px; top:320px; width:96px; height:96px;" />
+			<img id="tile-9" style="position:absolute; left:896px; top:320px; width:96px; height:96px;" />
+			<img id="tile-10" style="position:absolute; left:768px; top:448px; width:96px; height:96px;" />
+			<img id="tile-11" style="position:absolute; left:896px; top:448px; width:96px; height:96px;" />
 
-			<img id="tile-12" src="./img/tile-sky-blue.png" style="position:absolute; left:1024px; top:320px; width:96px; height:96px;" />
-			<img id="tile-13" src="./img/tile-sky-blue.png" style="position:absolute; left:1152px; top:320px; width:96px; height:96px;" />
-			<img id="tile-14" src="./img/tile-sky-blue.png" style="position:absolute; left:1024px; top:448px; width:96px; height:96px;" />
-			<img id="tile-15" src="./img/tile-sky-blue.png" style="position:absolute; left:1152px; top:448px; width:96px; height:96px;" />
+			<img id="tile-12" style="position:absolute; left:1024px; top:320px; width:96px; height:96px;" />
+			<img id="tile-13" style="position:absolute; left:1152px; top:320px; width:96px; height:96px;" />
+			<img id="tile-14" style="position:absolute; left:1024px; top:448px; width:96px; height:96px;" />
+			<img id="tile-15" style="position:absolute; left:1152px; top:448px; width:96px; height:96px;" />
 
-			<img id="tile-16" src="./img/tile-gray.png" style="position:absolute; left:1280px; top:320px; width:96px; height:96px;" />
-			<img id="tile-17" src="./img/tile-gray.png" style="position:absolute; left:1408px; top:320px; width:96px; height:96px;" />
-			<img id="tile-18" src="./img/tile-gray.png" style="position:absolute; left:1280px; top:448px; width:96px; height:96px;" />
-			<img id="tile-19" src="./img/tile-gray.png" style="position:absolute; left:1408px; top:448px; width:96px; height:96px;" />
+			<img id="tile-16" style="position:absolute; left:1280px; top:320px; width:96px; height:96px;" />
+			<img id="tile-17" style="position:absolute; left:1408px; top:320px; width:96px; height:96px;" />
+			<img id="tile-18" style="position:absolute; left:1280px; top:448px; width:96px; height:96px;" />
+			<img id="tile-19" style="position:absolute; left:1408px; top:448px; width:96px; height:96px;" />
 			
-			<img id="tile-20" src="./img/tile-yellow-green.png" style="position:absolute; left:768px; top:576px; width:96px; height:96px;" />
-			<img id="tile-21" src="./img/tile-yellow-green.png" style="position:absolute; left:896px; top:576px; width:96px; height:96px;" />
-			<img id="tile-22" src="./img/tile-yellow-green.png" style="position:absolute; left:768px; top:704px; width:96px; height:96px;" />
-			<img id="tile-23" src="./img/tile-yellow-green.png" style="position:absolute; left:896px; top:704px; width:96px; height:96px;" />
+			<img id="tile-20" style="position:absolute; left:768px; top:576px; width:96px; height:96px;" />
+			<img id="tile-21" style="position:absolute; left:896px; top:576px; width:96px; height:96px;" />
+			<img id="tile-22" style="position:absolute; left:768px; top:704px; width:96px; height:96px;" />
+			<img id="tile-23" style="position:absolute; left:896px; top:704px; width:96px; height:96px;" />
 
 			<!-- ボタン。 -->
-			<a href="javascript: shuffule();" style="position:absolute; left:448px; top:32px; font-size:20px;">Shuffule</a>
+			<a href="javascript: reset();" style="position:absolute; left:450px; top:8px; font-size:20px;">Reset</a>
+			<a href="javascript: reset(); shuffle(1);" style="position:absolute; left:530px; top:8px; font-size:20px;">Lv.1</a>
+			<a href="javascript: reset(); shuffle(2);" style="position:absolute; left:610px; top:8px; font-size:20px;">Lv.2</a>
+			<a href="javascript: reset(); shuffle(3);" style="position:absolute; left:690px; top:8px; font-size:20px;">Lv.3</a>
+			<a href="javascript: reset(); shuffle(4);" style="position:absolute; left:770px; top:8px; font-size:20px;">Lv.4</a>
+			<a href="javascript: reset(); shuffle(5);" style="position:absolute; left:850px; top:8px; font-size:20px;">Lv.5</a>
+			<a href="javascript: reset(); shuffle(6);" style="position:absolute; left:930px; top:8px; font-size:20px;">Lv.6</a>
+			<a href="javascript: reset(); shuffle(7);" style="position:absolute; left:1010px; top:8px; font-size:20px;">Lv.7</a>
+			<a href="javascript: reset(); shuffle(8);" style="position:absolute; left:1090px; top:8px; font-size:20px;">Lv.8</a>
+			<a href="javascript: reset(); shuffle(9);" style="position:absolute; left:1170px; top:8px; font-size:20px;">Lv.9</a>
+			<a href="javascript: reset(); shuffle(10);" style="position:absolute; left:1250px; top:8px; font-size:20px;">Lv.10</a>
+			<a href="javascript: reset(); shuffle(Math.round( Math.random()*1000 ) + 500);" style="position:absolute; left:1330px; top:8px; font-size:20px;">Lunatic.</a>
 
 			<!-- 回転ボタン。 -->
 			<a href="javascript: rotate(0);" style="position:absolute; left:288px; top:96px; font-size:20px;">Rotate</a>
