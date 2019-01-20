@@ -195,7 +195,7 @@
 					break;
 			}			
 		}
-
+		
 		/** 単純なシャッフルではなく、キャラクター付けを行う。 */
 		function problem(id)
 		{
@@ -231,6 +231,57 @@
 					rotate(handle0);
 					rotate(handle1);
 					break;
+
+				case 4:
+					// 高麗野あうん
+					// ３つの軸から１つずつ選び、それらを １つずつ進めるだけ。
+					
+					var verticalHandles = [0, 1, 6, 7];
+					var horizontalHandles = [2, 3, 8, 9];
+					var dialHandles = [4, 5, 10, 11];
+					
+					var handle0 = verticalHandles[ Math.round( Math.random()*3 )];
+					var handle1 = horizontalHandles[ Math.round( Math.random()*3 )];
+					var handle2 = dialHandles[ Math.round( Math.random()*3 )];
+					
+					rotate(handle0);
+					rotate(handle1);
+					rotate(handle2);
+					break;
+
+				case 5:
+					// 紅美鈴
+					// まず、２つの軸を選ぶ。あとは交互に回すだけ。
+										
+					var verticalHandles = [0, 1, 6, 7];
+					var horizontalHandles = [2, 3, 8, 9];
+					var dialHandles = [4, 5, 10, 11];
+					
+					var handle0;
+					var handle1;
+					
+					// 0～2
+					switch(Math.round( Math.random()*2 ))
+					{
+						case 0:
+							handle0 = verticalHandles[ Math.round( Math.random()*3 )];
+							handle1 = horizontalHandles[ Math.round( Math.random()*3 )];
+							break;
+						case 1:
+							handle0 = verticalHandles[ Math.round( Math.random()*3 )];
+							handle1 = dialHandles[ Math.round( Math.random()*3 )];
+							break;
+						default:
+							handle0 = horizontalHandles[ Math.round( Math.random()*3 )];
+							handle1 = dialHandles[ Math.round( Math.random()*3 )];
+							break;
+					}
+					
+					rotate(handle0);
+					rotate(handle1);
+					rotate(handle0);
+					rotate(handle1);
+					break;
 					
 				default:
 					for(i=0; i<id; i++)
@@ -240,7 +291,9 @@
 						rotate(handle);
 					}
 					break;
-			}			
+			}
+			
+			saveProblem();
 		}
 		
 		/** 指定の回数、ランダムにキューブをねじります。 */
@@ -253,6 +306,29 @@
 				var handle = Math.round( Math.random()*11 );
 				rotate(handle);
 			}
+		}
+
+		var diaSrcSave = [];
+		var tileSrcSave = [];
+		
+		/** 問題をリセットできるよう、記憶しておく。 */
+		function saveProblem()
+		{
+			for(i=0; i<24; i++)
+			{
+				diaSrcSave[i] = document.getElementById("dia-" + i).src;
+				tileSrcSave[i] = document.getElementById("tile-" + i).src;
+			}
+		}
+		
+		/** 問題を復元する。 */
+		function restoreProblem()
+		{
+			for(i=0; i<24; i++)
+			{
+				document.getElementById("dia-" + i).src = diaSrcSave[i];
+				document.getElementById("tile-" + i).src = tileSrcSave[i];
+			}			
 		}
 
 		/** 揃っている状態に戻します。 */
@@ -324,12 +400,12 @@
 	<div style="position:absolute; top:0px; left:0px; width:1920px; height:1080px; background-color:#eeeeff;">
 		<img id="title" src="./img/title.png" style="visibility:hidden; position:absolute; top:0px;" />
 		<div id="title-scene" style="visibility:hidden; position:absolute; top:0px; left:0px; width:100%; height:100%; background-image:url('./img/window1.png');">
-			<a href="javascript: problemId=1; stageLabel='チルノ レベル'; void(0);" style="position:absolute; left:560px; top:550px; font-size:32px;" onclick="start_game();">1.チルノ レベル</a>
-			<a href="javascript: problemId=2; stageLabel='宮古芳香 レベル'; void(0);" style="position:absolute; left:560px; top:590px; font-size:32px;" onclick="start_game();">2.宮古芳香 レベル</a>
-			<a href="javascript: problemId=3; stageLabel='サニーミルク レベル'; void(0);" style="position:absolute; left:560px; top:630px; font-size:32px;" onclick="start_game();">3.サニーミルク レベル</a>
-			<!-- 紅美鈴 -->
-			<a href="javascript: problemId=4; stageLabel='雲居一輪 レベル'; void(0);" style="position:absolute; left:560px; top:670px; font-size:32px;" onclick="start_game();">4.雲居一輪 レベル</a>
-			<a href="javascript: problemId=5; stageLabel='高麗野あうん レベル'; void(0);" style="position:absolute; left:560px; top:710px; font-size:32px;" onclick="start_game();">5.高麗野あうん　レベル</a>
+			<a href="javascript: problemId=1; stageLabel='チルノ レベル 「１度しか回してないのでは」'; void(0);" style="position:absolute; left:560px; top:550px; font-size:32px;" onclick="start_game();">1.チルノ レベル</a>
+			<a href="javascript: problemId=2; stageLabel='宮古芳香 レベル 「関節が固い」'; void(0);" style="position:absolute; left:560px; top:590px; font-size:32px;" onclick="start_game();">2.宮古芳香 レベル</a>
+			<a href="javascript: problemId=3; stageLabel='サニーミルク レベル 「縦回転と 横回転に順番があるのね」'; void(0);" style="position:absolute; left:560px; top:630px; font-size:32px;" onclick="start_game();">3.サニーミルク レベル</a>
+			<a href="javascript: problemId=4; stageLabel='高麗野あうん レベル 「回す方向は３つあるのでは」'; void(0);" style="position:absolute; left:560px; top:670px; font-size:32px;" onclick="start_game();">4.高麗野あうん レベル</a>
+			<a href="javascript: problemId=5; stageLabel='紅美鈴 レベル 「１、２、１、２の呼吸です！」'; void(0);" style="position:absolute; left:560px; top:710px; font-size:32px;" onclick="start_game();">5.紅美鈴　レベル</a>
+			<!-- 雲居一輪 レベル -->
 			<a href="javascript: problemId=6; stageLabel='ミスティア レベル'; void(0);" style="position:absolute; left:560px; top:750px; font-size:32px;" onclick="start_game();">6.ミスティア　レベル</a>
 			<a href="javascript: problemId=7; stageLabel='紅美鈴 レベル'; void(0);" style="position:absolute; left:960px; top:550px; font-size:32px;" onclick="start_game();">7.紅美鈴 レベル</a>
 			<a href="javascript: problemId=8; stageLabel='雲居一輪 レベル'; void(0);" style="position:absolute; left:960px; top:590px; font-size:32px;" onclick="start_game();">8.雲井一輪 レベル</a>
@@ -431,8 +507,9 @@
 			<img id="tile-23" style="position:absolute; left:896px; top:704px; width:96px; height:96px;" />
 
 			<!-- ボタン。 -->
-			<a href="javascript: exit();" style="position:absolute; left:450px; top:8px; font-size:20px;">Exit</a>
-			<span id="stageLabel" style="position:absolute; left:500px; top:8px; font-size:20px;">ステージ ラベル</span>
+			<a href="javascript: restoreProblem();" style="position:absolute; left:420px; top:8px; font-size:20px;">再挑戦</a>
+			<a href="javascript: exit();" style="position:absolute; left:500px; top:8px; font-size:20px;">Exit</a>
+			<span id="stageLabel" style="position:absolute; left:550px; top:4px; font-size:28px; font-weight:bold;">ステージ ラベル</span>
 
 			<!-- 回転ボタン。 -->
 			<a href="javascript: rotate(0);" style="position:absolute; left:288px; top:96px; font-size:20px;">Rotate</a>
