@@ -55,10 +55,13 @@
 						case "start-game":
 							document.getElementById("title").style.visibility = "hidden";
 							document.getElementById("title-scene").style.visibility = "hidden";
+							document.getElementById("go-to-next-stage").style.visibility = "hidden";
 							document.getElementById("development-scene").style.visibility = "visible";
 							reset();
 							problem(problemId);
 							document.getElementById("talkText").innerHTML = talkText;
+							document.getElementById("hint").src = "./img/hint-" + problemId +".png";
+							document.getElementById("hint").style.visibility = "visible";
 							scene = "finished";
 							break;
 					}
@@ -76,6 +79,7 @@
 			document.getElementById("title-scene").style.visibility = "hidden";
 			document.getElementById("development-scene").style.visibility = "hidden";
 			document.getElementById("congratulations").style.visibility = "hidden";
+			document.getElementById("hint").style.visibility = "hidden";
 			
 			// 棋譜。
 			record = "";
@@ -87,8 +91,26 @@
 		}
 		
 		/** ゲームを開始します。 */
-		function start_game() {
-			scene = "start-game";
+		function startStage(stageNumber) {
+			problemId = stageNumber;
+			scene = "start-game";			
+		}
+		
+		/** 次のステージに進みます。 */
+		function startNextStage() {
+			problemId = problemId + 1;
+
+			// スキップ。
+			if(problemId == 7) {
+				problemId = 12;
+			}
+			
+			// とりあえずループ。
+			if(12 < problemId) {
+				problemId = 1;
+			}
+			
+			startStage(problemId);
 		}
 		
 		/** 4箇所を１つずらします。 */
@@ -143,7 +165,7 @@
 			 7     4
 			   6 5
 		 */
-		function rotate(handle) {
+		function rotateOnly(handle) {
 			switch(handle)
 			{
 				case 0:
@@ -207,6 +229,13 @@
 					shift4(2, 0, 1, 3);
 					break;
 			}
+		}
+
+		/**
+			キューブをひねり、棋譜に残します。
+		 */
+		function rotateAndRecord(handle) {
+			rotateOnly(handle);
 			
 			// 棋譜。
 			record += " " + handle;
@@ -226,52 +255,28 @@
 			switch(handle)
 			{
 				case 0:
-					shift4(5, 4, 6, 7);
-					shift4(8, 0, 19, 20);
-					shift4(9, 1, 18, 21);
-					shift4(10, 2, 17, 22);
-					shift4(11, 3, 16, 23);
-					shift4(12, 13, 15, 14);
+					rotateOnly(0);
+					rotateOnly(1);
 					break;
 				case 1:
-					shift4(9, 8, 10, 11);
-					shift4(12, 2, 7, 21);
-					shift4(13, 0, 6, 23);
-					shift4(14, 3, 5, 20);
-					shift4(15, 1, 4, 22);
-					shift4(16, 17, 19, 18);
+					rotateOnly(2);
+					rotateOnly(3);
 					break;
 				case 2:
-					shift4(3, 1, 0, 2);
-					shift4(9, 13, 17, 5);
-					shift4(8, 12, 16, 4);
-					shift4(10, 14, 18, 6);
-					shift4(11, 15, 19, 7);
-					shift4(21, 23, 22, 20);
+					rotateOnly(4);
+					rotateOnly(5);
 					break;
 				case 3:
-					shift4(7, 6, 4, 5);
-					shift4(14, 15, 13, 12);
-					shift4(20, 19, 0, 8);
-					shift4(21, 18, 1, 9);
-					shift4(22, 17, 2, 10);
-					shift4(23, 16, 3, 11);
+					rotateOnly(6);
+					rotateOnly(7);
 					break;
 				case 4:
-					shift4(11, 10, 8, 9);
-					shift4(18, 19, 17, 16);
-					shift4(20, 5, 3, 14);
-					shift4(21, 7, 2, 12);
-					shift4(22, 4, 1, 15);
-					shift4(23, 6, 0, 13);
+					rotateOnly(8);
+					rotateOnly(9);
 					break;
 				case 5:
-					shift4(2, 0, 1, 3);
-					shift4(4, 16, 12, 8);
-					shift4(5, 17, 13, 9);
-					shift4(6, 18, 14, 10);
-					shift4(7, 19, 15, 11);
-					shift4(20, 22, 23, 21);
+					rotateOnly(10);
+					rotateOnly(11);
 					break;
 			}			
 		}
@@ -321,10 +326,13 @@
 			}
 			return reverse;
 		}
-		
-		/** 解答を作成する。 */
-		function addAnswer(handle)
-		{
+
+		/**
+		 * 問題作成時に キューブをひねります。棋譜に残し、解答も作成します。
+		 */
+		function rotateInProblem(handle) {
+			rotateAndRecord(handle);
+			
 			// 解答は、反対方向に回す。
 			var reverse = getReversedHandle(handle);
 			
@@ -341,45 +349,50 @@
 			switch(id)
 			{
 				case 1:
+				
 					// チルノ
+					talkText='チルノ 「どこを１回、回したか当ててみろ！」';
+					
 					// ランダムでハンドルを１回動かすだけ。
 					// 0~11
 					var handle = Math.round( Math.random()*11 );
-					rotate(handle);
-					addAnswer(handle);
+					rotateInProblem(handle);
 					break;
 
 				case 2:
+				
 					// 宮古芳香
+					talkText='宮古芳香 「２回も 回したのだ」';
+					
 					// ランダムでハンドルを１つ選び、それを 2つ進めるだけ。
 					// 0~11
 					var handle = Math.round( Math.random()*11 );
-					rotate(handle);
-					addAnswer(handle);
-					rotate(handle);
-					addAnswer(handle);
+					rotateInProblem(handle);
+					rotateInProblem(handle);
 					break;
 
 				case 3:
+				
 					// サニーミルク
-					// アトランダムでハンドルを２つ選び、それを １つずつ進めるだけ。
+					talkText='サニーミルク 「縦回転と 横回転に順番があるのね」';
 					
+					// アトランダムでハンドルを２つ選び、それを １つずつ進めるだけ。					
 					var verticalHandles = [0, 1, 6, 7];
 					var horizontalHandles = [2, 3, 8, 9];
 					
 					var handle0 = verticalHandles[ Math.round( Math.random()*3 )];
 					var handle1 = horizontalHandles[ Math.round( Math.random()*3 )];
 					
-					rotate(handle0);
-					addAnswer(handle0);
-					rotate(handle1);
-					addAnswer(handle1);
+					rotateInProblem(handle0);
+					rotateInProblem(handle1);
 					break;
 
 				case 4:
+				
 					// 高麗野あうん
-					// ３つの軸から１つずつ選び、それらを １つずつ進めるだけ。
+					talkText='高麗野あうん 「回す方向は３つあるのですよ」';
 					
+					// ３つの軸から１つずつ選び、それらを １つずつ進めるだけ。					
 					var verticalHandles = [0, 1, 6, 7];
 					var horizontalHandles = [2, 3, 8, 9];
 					var dialHandles = [4, 5, 10, 11];
@@ -388,18 +401,17 @@
 					var handle1 = horizontalHandles[ Math.round( Math.random()*3 )];
 					var handle2 = dialHandles[ Math.round( Math.random()*3 )];
 					
-					rotate(handle0);
-					addAnswer(handle0);
-					rotate(handle1);
-					addAnswer(handle1);
-					rotate(handle2);
-					addAnswer(handle2);
+					rotateInProblem(handle0);
+					rotateInProblem(handle1);
+					rotateInProblem(handle2);
 					break;
 
 				case 5:
+				
 					// 鈴瑚
-					// まず、２つの軸を選ぶ。あとは 0、1、 と進めて、最後は 0 を逆回転。
-										
+					talkText='鈴瑚 「両手で 団子３個食ってる間に終わる。最初の１回で ２色団子を揃えるのが決め手」';
+					
+					// まず、２つの軸を選ぶ。あとは 0、1、 と進めて、最後は 0 を逆回転。										
 					var verticalHandles = [0, 1, 6, 7];
 					var horizontalHandles = [2, 3, 8, 9];
 					var dialHandles = [4, 5, 10, 11];
@@ -425,20 +437,21 @@
 					}
 					
 					// 0
-					rotate(handle0);
-					addAnswer(handle0);
+					rotateInProblem(handle0);
+
 					// 1
-					rotate(handle1);
-					addAnswer(handle1);
+					rotateInProblem(handle1);
+
 					// 0 を逆回転。					
-					rotate(getReversedHandle(handle0));
-					addAnswer(getReversedHandle(handle0));
+					rotateInProblem(getReversedHandle(handle0));
 					break;
 
 				case 6:
+				
 					// 紅美鈴
-					// まず、２つの軸を選ぶ。あとは交互に回すだけ。
-										
+					talkText='紅美鈴 「１、２、１、２の呼吸です！ 角のちょうつがいの色を揃えていきましょう」';
+					
+					// まず、２つの軸を選ぶ。あとは交互に回すだけ。										
 					var verticalHandles = [0, 1, 6, 7];
 					var horizontalHandles = [2, 3, 8, 9];
 					var dialHandles = [4, 5, 10, 11];
@@ -463,23 +476,25 @@
 							break;
 					}
 					
-					rotate(handle0);
-					addAnswer(handle0);
-					rotate(handle1);
-					addAnswer(handle1);
-					rotate(handle0);
-					addAnswer(handle0);
-					rotate(handle1);
-					addAnswer(handle1);
+					rotateInProblem(handle0);
+					rotateInProblem(handle1);
+					rotateInProblem(handle0);
+					rotateInProblem(handle1);
 					break;
-					
+
+				case 12:
 				default:
-					for(i=0; i<id; i++)
+				
+					// 八雲紫
+					talkText='八雲紫 「ランダムな問題に　美しさは感じないもの」';
+
+					// とりあえず、ランダムにシャッフル。
+					var count = Math.round( Math.random()*40 ) + 40;
+					for(i=0; i<count; i++)
 					{
 						// 0~11
 						var handle = Math.round( Math.random()*11 );
-						rotate(handle);
-						addAnswer(handle);
+						rotateInProblem(handle);
 					}
 					break;
 			}
@@ -499,7 +514,7 @@
 			{
 				// 0~11
 				var handle = Math.round( Math.random()*11 );
-				rotate(handle);
+				rotateAndRecord(handle);
 			}
 		}
 
@@ -601,6 +616,7 @@
 		{
 			// まず隠しておく。
 			document.getElementById("congratulations").style.visibility = "hidden";
+			document.getElementById("go-to-next-stage").style.visibility = "hidden";
 
 			// 天面
 			if ( document.getElementById("tile-0").src != document.getElementById("tile-1").src ||
@@ -646,6 +662,7 @@
 		
 			// ６面で それぞれ４タイル一致していれば。
 			document.getElementById("congratulations").style.visibility = "visible";
+			document.getElementById("go-to-next-stage").style.visibility = "visible";
 		}
 		
 		/** 解答を見る。 */
@@ -667,21 +684,21 @@
 	<div style="position:absolute; top:0px; left:0px; width:1920px; height:1080px; background-color:#eeeeff;">
 		<img id="title" src="./img/title.png" style="visibility:hidden; position:absolute; top:0px;" />
 		<div id="title-scene" style="visibility:hidden; position:absolute; top:0px; left:0px; width:100%; height:100%; background-image:url('./img/window1.png');">
-			<a href="javascript: problemId=1; talkText='チルノ 「どこを１回、回したか当ててみろ！」'; void(0);" style="position:absolute; left:560px; top:550px; font-size:32px;" onclick="start_game();">1.チルノ レベル</a>
-			<a href="javascript: problemId=2; talkText='宮古芳香 「２回も 回したのだ」'; void(0);" style="position:absolute; left:560px; top:590px; font-size:32px;" onclick="start_game();">2.宮古芳香 レベル</a>
-			<a href="javascript: problemId=3; talkText='サニーミルク 「縦回転と 横回転に順番があるのね」'; void(0);" style="position:absolute; left:560px; top:630px; font-size:32px;" onclick="start_game();">3.サニーミルク レベル</a>
-			<a href="javascript: problemId=4; talkText='高麗野あうん 「回す方向は３つあるのですよ」'; void(0);" style="position:absolute; left:560px; top:670px; font-size:32px;" onclick="start_game();">4.高麗野あうん レベル</a>
-			<a href="javascript: problemId=5; talkText='鈴瑚 「両手で 団子３個食ってる間に終わる。最初に ２色団子を揃えるのが決め手」'; void(0);" style="position:absolute; left:560px; top:710px; font-size:32px;" onclick="start_game();">5.鈴瑚　レベル</a>
-			<a href="javascript: problemId=6; talkText='紅美鈴 「１、２、１、２の呼吸です！ 角のちょうつがいの色を揃えていきましょう」'; void(0);" style="position:absolute; left:560px; top:750px; font-size:32px;" onclick="start_game();">6.紅美鈴　レベル</a>
+			<a href="javascript: void(0);" style="position:absolute; left:560px; top:550px; font-size:32px;" onclick="startStage(1);">1.チルノ レベル</a>
+			<a href="javascript: void(0);" style="position:absolute; left:560px; top:590px; font-size:32px;" onclick="startStage(2);">2.宮古芳香 レベル</a>
+			<a href="javascript: void(0);" style="position:absolute; left:560px; top:630px; font-size:32px;" onclick="startStage(3);">3.サニーミルク レベル</a>
+			<a href="javascript: void(0);" style="position:absolute; left:560px; top:670px; font-size:32px;" onclick="startStage(4);">4.高麗野あうん レベル</a>
+			<a href="javascript: void(0);" style="position:absolute; left:560px; top:710px; font-size:32px;" onclick="startStage(5);">5.鈴瑚　レベル</a>
+			<a href="javascript: void(0);" style="position:absolute; left:560px; top:750px; font-size:32px;" onclick="startStage(6);">6.紅美鈴　レベル</a>
 			<!-- TODO もっと簡単なレベルを用意せな……☆ -->
 			<!--
-			<a href="javascript: problemId=7; talkText='紅美鈴 レベル'; void(0);" style="position:absolute; left:960px; top:550px; font-size:32px;" onclick="start_game();">7.紅美鈴 レベル</a>
-			<a href="javascript: problemId=8; talkText='雲居一輪 レベル'; void(0);" style="position:absolute; left:960px; top:590px; font-size:32px;" onclick="start_game();">8.雲井一輪 レベル</a>
-			<a href="javascript: problemId=16; talkText='魔理沙 レベル'; void(0);" style="position:absolute; left:960px; top:630px; font-size:32px;" onclick="start_game();">9.魔理沙 レベル</a>
-			<a href="javascript: problemId=23; talkText='宇佐美菫子 レベル'; void(0);" style="position:absolute; left:960px; top:670px; font-size:32px;" onclick="start_game();">10.宇佐美菫子 レベル</a>
-			<a href="javascript: problemId=45; talkText='霊夢 レベル'; void(0);" style="position:absolute; left:960px; top:710px; font-size:32px;" onclick="start_game();">11.霊夢 レベル</a>
+			<a href="javascript: problemId=7; talkText='紅美鈴 レベル'; void(0);" style="position:absolute; left:960px; top:550px; font-size:32px;" onclick="startStage();">7.紅美鈴 レベル</a>
+			<a href="javascript: problemId=8; talkText='雲居一輪 レベル'; void(0);" style="position:absolute; left:960px; top:590px; font-size:32px;" onclick="startStage();">8.雲井一輪 レベル</a>
+			<a href="javascript: problemId=16; talkText='魔理沙 レベル'; void(0);" style="position:absolute; left:960px; top:630px; font-size:32px;" onclick="startStage();">9.魔理沙 レベル</a>
+			<a href="javascript: problemId=23; talkText='宇佐美菫子 レベル'; void(0);" style="position:absolute; left:960px; top:670px; font-size:32px;" onclick="startStage();">10.宇佐美菫子 レベル</a>
+			<a href="javascript: problemId=45; talkText='霊夢 レベル'; void(0);" style="position:absolute; left:960px; top:710px; font-size:32px;" onclick="startStage();">11.霊夢 レベル</a>
 			-->
-			<a href="javascript: problemId=Math.round( Math.random()*40 ) + 40; talkText='八雲紫 「ランダムな問題に　美しさは感じないもの」'; void(0);" style="position:absolute; left:960px; top:750px; font-size:32px;" onclick="start_game();">12.八雲紫 レベル</a>
+			<a href="javascript: void(0);" style="position:absolute; left:960px; top:750px; font-size:32px;" onclick="startStage(12);">12.八雲紫 レベル</a>
 		</div>
 		<div id="development-scene" style="visibility:hidden; position:absolute; top:0px; left:0px; width:100%; height:100%; background-image:url('./img/development.png');">
 			<!--
@@ -721,20 +738,20 @@
 				16      19
 				    18
 			-->
-			<img id="dia-3" style="position:absolute; left:48px; top:336px; width:64px; height:96px;" />
-			<img id="dia-2" style="position:absolute; left:144px; top:288px; width:64px; height:96px;" />
-			<img id="dia-1" style="position:absolute; left:48px; top:432px; width:64px; height:96px;" />
-			<img id="dia-0" style="position:absolute; left:144px; top:384px; width:64px; height:96px;" />
+			<img id="dia-3" style="position:absolute; left:64px; top:336px; width:64px; height:96px;" />
+			<img id="dia-2" style="position:absolute; left:160px; top:288px; width:64px; height:96px;" />
+			<img id="dia-1" style="position:absolute; left:64px; top:432px; width:64px; height:96px;" />
+			<img id="dia-0" style="position:absolute; left:160px; top:384px; width:64px; height:96px;" />
 
-			<img id="dia-5" style="position:absolute; left:208px; top:288px; width:64px; height:96px;" />
-			<img id="dia-7" style="position:absolute; left:304px; top:336px; width:64px; height:96px;" />
-			<img id="dia-4" style="position:absolute; left:208px; top:384px; width:64px; height:96px;" />
-			<img id="dia-6" style="position:absolute; left:304px; top:432px; width:64px; height:96px;" />
+			<img id="dia-5" style="position:absolute; left:224px; top:288px; width:64px; height:96px;" />
+			<img id="dia-7" style="position:absolute; left:320px; top:336px; width:64px; height:96px;" />
+			<img id="dia-4" style="position:absolute; left:224px; top:384px; width:64px; height:96px;" />
+			<img id="dia-6" style="position:absolute; left:320px; top:432px; width:64px; height:96px;" />
 
-			<img id="dia-17" style="position:absolute; left:144px; top:480px; width:128px; height:64px;" />
-			<img id="dia-19" style="position:absolute; left:240px; top:528px; width:128px; height:64px;" />
-			<img id="dia-18" style="position:absolute; left:144px; top:576px; width:128px; height:64px;" />
-			<img id="dia-16" style="position:absolute; left:48px; top:528px; width:128px; height:64px;" />
+			<img id="dia-17" style="position:absolute; left:160px; top:480px; width:128px; height:64px;" />
+			<img id="dia-19" style="position:absolute; left:256px; top:528px; width:128px; height:64px;" />
+			<img id="dia-18" style="position:absolute; left:160px; top:576px; width:128px; height:64px;" />
+			<img id="dia-16" style="position:absolute; left:64px; top:528px; width:128px; height:64px;" />
 			
 			<!--
 				展開図
@@ -776,38 +793,54 @@
 			<img id="tile-23" style="position:absolute; left:208px; top:1008px; width:48px; height:48px;" />
 
 			<!-- ボタンの下に表示する。 -->
+			<img id="hint" style="position:absolute; left:1104px; top:160px; width:400px; height:320px;" />
+			<!--<img id="face" style="position:absolute; left:1504px; top:160px; width:400px; height:320px;" />-->
 			<img id="congratulations" src="./img/congratulations.png" style="visibility:hidden; position:absolute; left:0px; top:0px;" />
 			
 			<!-- ボタン。 -->
-			<a href="javascript: restoreProblem();" style="position:absolute; left:420px; top:8px; font-size:20px;">再挑戦</a>
-			<a href="javascript: exit();" style="position:absolute; left:500px; top:8px; font-size:20px;">Exit</a>
-			<a href="javascript: showAnswer();" style="position:absolute; left:500px; top:36px; font-size:20px;">解答を見る</a>
-			<span id="talkText" style="position:absolute; left:1120px; top:496px; width:768px; height:160px; font-size:28px; font-weight:bold;">台詞</span>
+			<a href="javascript: restoreProblem();" style="position:absolute; left:1120px; top:48px; font-size:20px;">再挑戦</a>
+			<a href="javascript: exit();" style="position:absolute; left:1120px; top:80px; font-size:20px;">Exit</a>
+			<a href="javascript: showAnswer();" style="position:absolute; left:1120px; top:112px; font-size:20px;">解答を見る</a>
+			<span id="talkText" style="position:absolute; left:1120px; top:512px; width:768px; height:160px; font-size:28px; font-weight:bold;">台詞</span>
 			<span id="record" style="position:absolute; left:628px; top:914px; width:1264px; height:64px; font-size:28px;"></span>
 			<span id="answer" style="position:absolute; left:624px; top:992px; width:1264px; height:64px; font-size:28px; color:orange;"></span>
+			<a id="go-to-next-stage" href="javascript: startNextStage();" style="position:absolute; left:624px; top:832px; font-size:48px;">Go to next stage!</a>
 
-			<!-- 回転ボタン。 -->
-			<a href="javascript: rotate(0);" style="position:absolute; left:832px; top:256px; font-size:24px;">Rotate0</a>
-			<a href="javascript: rotate(1);" style="position:absolute; left:928px; top:320px; font-size:24px;">R1</a>
-			<a href="javascript: rotate(2);" style="position:absolute; left:928px; top:416px; font-size:24px;">R2</a>
-			<a href="javascript: rotate(3);" style="position:absolute; left:928px; top:512px; font-size:24px;">R3</a>
-			<a href="javascript: rotate(4);" style="position:absolute; left:864px; top:608px; font-size:24px;">R4</a>
-			<a href="javascript: rotate(5);" style="position:absolute; left:768px; top:640px; font-size:24px;">R5</a>
-			<a href="javascript: rotate(6);" style="position:absolute; left:704px; top:640px; font-size:24px;">R6</a>
-			<a href="javascript: rotate(7);" style="position:absolute; left:608px; top:608px; font-size:24px;">R7</a>
-			<a href="javascript: rotate(8);" style="position:absolute; left:544px; top:512px; font-size:24px;">R8</a>
-			<a href="javascript: rotate(9);" style="position:absolute; left:544px; top:416px; font-size:24px;">R9</a>
-			<a href="javascript: rotate(10);" style="position:absolute; left:544px; top:320px; font-size:24px;">R10</a>
-			<a href="javascript: rotate(11);" style="position:absolute; left:640px; top:256px; font-size:24px;">R11</a>
+			<!-- フロント 回転ボタン。 -->
+			<a href="javascript: rotateAndRecord(0);" style="position:absolute; left:832px; top:256px; font-size:24px;">R0</a>
+			<a href="javascript: rotateAndRecord(1);" style="position:absolute; left:928px; top:320px; font-size:24px;">R1</a>
+			<a href="javascript: rotateAndRecord(2);" style="position:absolute; left:928px; top:416px; font-size:24px;">R2</a>
+			<a href="javascript: rotateAndRecord(3);" style="position:absolute; left:928px; top:512px; font-size:24px;">R3</a>
+			<a href="javascript: rotateAndRecord(4);" style="position:absolute; left:864px; top:608px; font-size:24px;">R4</a>
+			<a href="javascript: rotateAndRecord(5);" style="position:absolute; left:768px; top:640px; font-size:24px;">R5</a>
+			<a href="javascript: rotateAndRecord(6);" style="position:absolute; left:704px; top:640px; font-size:24px;">R6</a>
+			<a href="javascript: rotateAndRecord(7);" style="position:absolute; left:608px; top:608px; font-size:24px;">R7</a>
+			<a href="javascript: rotateAndRecord(8);" style="position:absolute; left:544px; top:512px; font-size:24px;">R8</a>
+			<a href="javascript: rotateAndRecord(9);" style="position:absolute; left:544px; top:416px; font-size:24px;">R9</a>
+			<a href="javascript: rotateAndRecord(10);" style="position:absolute; left:544px; top:320px; font-size:24px;">R10</a>
+			<a href="javascript: rotateAndRecord(11);" style="position:absolute; left:640px; top:256px; font-size:24px;">R11</a>
 			
-			<!-- 視角ボタン。 -->
-			<a href="javascript: rotateAngle(0);" style="position:absolute; left:928px; top:240px; font-size:20px;">Angle+Y</a>
+			<!-- フロント 視角ボタン。 -->
+			<a href="javascript: rotateAngle(0);" style="position:absolute; left:928px; top:240px; font-size:20px;">+Y</a>
 			<a href="javascript: rotateAngle(1);" style="position:absolute; left:992px; top:448px; font-size:20px;">+Z</a>
 			<a href="javascript: rotateAngle(2);" style="position:absolute; left:816px; top:672px; font-size:20px;">+X</a>
 			<a href="javascript: rotateAngle(3);" style="position:absolute; left:656px; top:672px; font-size:20px;">-Y</a>
 			<a href="javascript: rotateAngle(4);" style="position:absolute; left:480px; top:448px; font-size:20px;">-Z</a>
 			<a href="javascript: rotateAngle(5);" style="position:absolute; left:554px; top:240px; font-size:20px;">-X</a>
-			
+
+			<!-- フロント 回転ボタン。 -->
+			<a href="javascript: rotateAndRecord(4);" style="position:absolute; left:224px; top:240px; font-size:24px;">R4</a>
+			<a href="javascript: rotateAndRecord(5);" style="position:absolute; left:320px; top:272px; font-size:24px;">R5</a>
+			<a href="javascript: rotateAndRecord(2);" style="position:absolute; left:384px; top:368px; font-size:24px;">R2</a>
+			<a href="javascript: rotateAndRecord(3);" style="position:absolute; left:384px; top:464px; font-size:24px;">R3</a>
+			<a href="javascript: rotateAndRecord(0);" style="position:absolute; left:384px; top:560px; font-size:24px;">R0</a>
+			<a href="javascript: rotateAndRecord(1);" style="position:absolute; left:272px; top:624px; font-size:24px;">R1</a>
+			<a href="javascript: rotateAndRecord(10);" style="position:absolute; left:112px; top:624px; font-size:24px;">R10</a>
+			<a href="javascript: rotateAndRecord(11);" style="position:absolute; left:0px; top:560px; font-size:24px;">R11</a>			
+			<a href="javascript: rotateAndRecord(8);" style="position:absolute; left:0px; top:464px; font-size:24px;">R8</a>
+			<a href="javascript: rotateAndRecord(9);" style="position:absolute; left:0px; top:368px; font-size:24px;">R9</a>
+			<a href="javascript: rotateAndRecord(6);" style="position:absolute; left:64px; top:272px; font-size:24px;">R6</a>
+			<a href="javascript: rotateAndRecord(7);" style="position:absolute; left:160px; top:240px; font-size:24px;">R7</a>
 		</div>
 	</div>
 
