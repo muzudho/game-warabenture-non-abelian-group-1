@@ -9,7 +9,7 @@
 		
 		/** 問題指定。 */
 		var problemId = 1;
-		var stageLabel = "";
+		var talkText = "";
 		
 		/** 棋譜。 */
 		var record = "";
@@ -58,7 +58,7 @@
 							document.getElementById("development-scene").style.visibility = "visible";
 							reset();
 							problem(problemId);
-							document.getElementById("stageLabel").innerHTML = stageLabel;
+							document.getElementById("talkText").innerHTML = talkText;
 							scene = "finished";
 							break;
 					}
@@ -667,21 +667,21 @@
 	<div style="position:absolute; top:0px; left:0px; width:1920px; height:1080px; background-color:#eeeeff;">
 		<img id="title" src="./img/title.png" style="visibility:hidden; position:absolute; top:0px;" />
 		<div id="title-scene" style="visibility:hidden; position:absolute; top:0px; left:0px; width:100%; height:100%; background-image:url('./img/window1.png');">
-			<a href="javascript: problemId=1; stageLabel='チルノ レベル 「１度しか回してないのでは」'; void(0);" style="position:absolute; left:560px; top:550px; font-size:32px;" onclick="start_game();">1.チルノ レベル</a>
-			<a href="javascript: problemId=2; stageLabel='宮古芳香 レベル 「関節が固い」'; void(0);" style="position:absolute; left:560px; top:590px; font-size:32px;" onclick="start_game();">2.宮古芳香 レベル</a>
-			<a href="javascript: problemId=3; stageLabel='サニーミルク レベル 「縦回転と 横回転に順番があるのね」'; void(0);" style="position:absolute; left:560px; top:630px; font-size:32px;" onclick="start_game();">3.サニーミルク レベル</a>
-			<a href="javascript: problemId=4; stageLabel='高麗野あうん レベル 「回す方向は３つあるのですよ」'; void(0);" style="position:absolute; left:560px; top:670px; font-size:32px;" onclick="start_game();">4.高麗野あうん レベル</a>
-			<a href="javascript: problemId=5; stageLabel='鈴瑚 レベル 「両手で 団子３個食ってる間に終わる。最初に ２色団子を揃えるのが決め手」'; void(0);" style="position:absolute; left:560px; top:710px; font-size:32px;" onclick="start_game();">5.鈴瑚　レベル</a>
-			<a href="javascript: problemId=6; stageLabel='紅美鈴 レベル 「１、２、１、２の呼吸です！ 角のちょうつがいの色を揃えていきましょう」'; void(0);" style="position:absolute; left:560px; top:750px; font-size:32px;" onclick="start_game();">6.紅美鈴　レベル</a>
+			<a href="javascript: problemId=1; talkText='チルノ 「どこを１回、回したか当ててみろ！」'; void(0);" style="position:absolute; left:560px; top:550px; font-size:32px;" onclick="start_game();">1.チルノ レベル</a>
+			<a href="javascript: problemId=2; talkText='宮古芳香 「２回も 回したのだ」'; void(0);" style="position:absolute; left:560px; top:590px; font-size:32px;" onclick="start_game();">2.宮古芳香 レベル</a>
+			<a href="javascript: problemId=3; talkText='サニーミルク 「縦回転と 横回転に順番があるのね」'; void(0);" style="position:absolute; left:560px; top:630px; font-size:32px;" onclick="start_game();">3.サニーミルク レベル</a>
+			<a href="javascript: problemId=4; talkText='高麗野あうん 「回す方向は３つあるのですよ」'; void(0);" style="position:absolute; left:560px; top:670px; font-size:32px;" onclick="start_game();">4.高麗野あうん レベル</a>
+			<a href="javascript: problemId=5; talkText='鈴瑚 「両手で 団子３個食ってる間に終わる。最初に ２色団子を揃えるのが決め手」'; void(0);" style="position:absolute; left:560px; top:710px; font-size:32px;" onclick="start_game();">5.鈴瑚　レベル</a>
+			<a href="javascript: problemId=6; talkText='紅美鈴 「１、２、１、２の呼吸です！ 角のちょうつがいの色を揃えていきましょう」'; void(0);" style="position:absolute; left:560px; top:750px; font-size:32px;" onclick="start_game();">6.紅美鈴　レベル</a>
 			<!-- TODO もっと簡単なレベルを用意せな……☆ -->
 			<!--
-			<a href="javascript: problemId=7; stageLabel='紅美鈴 レベル'; void(0);" style="position:absolute; left:960px; top:550px; font-size:32px;" onclick="start_game();">7.紅美鈴 レベル</a>
-			<a href="javascript: problemId=8; stageLabel='雲居一輪 レベル'; void(0);" style="position:absolute; left:960px; top:590px; font-size:32px;" onclick="start_game();">8.雲井一輪 レベル</a>
-			<a href="javascript: problemId=16; stageLabel='魔理沙 レベル'; void(0);" style="position:absolute; left:960px; top:630px; font-size:32px;" onclick="start_game();">9.魔理沙 レベル</a>
-			<a href="javascript: problemId=23; stageLabel='宇佐美菫子 レベル'; void(0);" style="position:absolute; left:960px; top:670px; font-size:32px;" onclick="start_game();">10.宇佐美菫子 レベル</a>
-			<a href="javascript: problemId=45; stageLabel='霊夢 レベル'; void(0);" style="position:absolute; left:960px; top:710px; font-size:32px;" onclick="start_game();">11.霊夢 レベル</a>
+			<a href="javascript: problemId=7; talkText='紅美鈴 レベル'; void(0);" style="position:absolute; left:960px; top:550px; font-size:32px;" onclick="start_game();">7.紅美鈴 レベル</a>
+			<a href="javascript: problemId=8; talkText='雲居一輪 レベル'; void(0);" style="position:absolute; left:960px; top:590px; font-size:32px;" onclick="start_game();">8.雲井一輪 レベル</a>
+			<a href="javascript: problemId=16; talkText='魔理沙 レベル'; void(0);" style="position:absolute; left:960px; top:630px; font-size:32px;" onclick="start_game();">9.魔理沙 レベル</a>
+			<a href="javascript: problemId=23; talkText='宇佐美菫子 レベル'; void(0);" style="position:absolute; left:960px; top:670px; font-size:32px;" onclick="start_game();">10.宇佐美菫子 レベル</a>
+			<a href="javascript: problemId=45; talkText='霊夢 レベル'; void(0);" style="position:absolute; left:960px; top:710px; font-size:32px;" onclick="start_game();">11.霊夢 レベル</a>
 			-->
-			<a href="javascript: problemId=Math.round( Math.random()*40 ) + 40; stageLabel='八雲紫 レベル 「ランダムな問題に　美しさは感じないもの」'; void(0);" style="position:absolute; left:960px; top:750px; font-size:32px;" onclick="start_game();">12.八雲紫 レベル</a>
+			<a href="javascript: problemId=Math.round( Math.random()*40 ) + 40; talkText='八雲紫 「ランダムな問題に　美しさは感じないもの」'; void(0);" style="position:absolute; left:960px; top:750px; font-size:32px;" onclick="start_game();">12.八雲紫 レベル</a>
 		</div>
 		<div id="development-scene" style="visibility:hidden; position:absolute; top:0px; left:0px; width:100%; height:100%; background-image:url('./img/development.png');">
 			<!--
@@ -695,20 +695,20 @@
 				22       13
 				   23 15
 			-->
-			<img id="dia-8" style="position:absolute; left:224px; top:128px; width:128px; height:64px;" />
-			<img id="dia-9" style="position:absolute; left:320px; top:176px; width:128px; height:64px;" />
-			<img id="dia-10" style="position:absolute; left:128px; top:176px; width:128px; height:64px;" />
-			<img id="dia-11" style="position:absolute; left:224px; top:224px; width:128px; height:64px;" />
+			<img id="dia-8" style="position:absolute; left:704px; top:272px; width:128px; height:64px;" />
+			<img id="dia-9" style="position:absolute; left:800px; top:320px; width:128px; height:64px;" />
+			<img id="dia-10" style="position:absolute; left:608px; top:320px; width:128px; height:64px;" />
+			<img id="dia-11" style="position:absolute; left:704px; top:368px; width:128px; height:64px;" />
 
-			<img id="dia-20" style="position:absolute; left:128px; top:240px; width:64px; height:96px;" />
-			<img id="dia-21" style="position:absolute; left:224px; top:288px; width:64px; height:96px;" />
-			<img id="dia-22" style="position:absolute; left:128px; top:336px; width:64px; height:96px;" />
-			<img id="dia-23" style="position:absolute; left:224px; top:384px; width:64px; height:96px;" />
+			<img id="dia-20" style="position:absolute; left:608px; top:384px; width:64px; height:96px;" />
+			<img id="dia-21" style="position:absolute; left:704px; top:432px; width:64px; height:96px;" />
+			<img id="dia-22" style="position:absolute; left:608px; top:480px; width:64px; height:96px;" />
+			<img id="dia-23" style="position:absolute; left:704px; top:528px; width:64px; height:96px;" />
 
-			<img id="dia-14" style="position:absolute; left:288px; top:288px; width:64px; height:96px;" />
-			<img id="dia-12" style="position:absolute; left:384px; top:240px; width:64px; height:96px;" />
-			<img id="dia-15" style="position:absolute; left:288px; top:384px; width:64px; height:96px;" />
-			<img id="dia-13" style="position:absolute; left:384px; top:336px; width:64px; height:96px;" />
+			<img id="dia-14" style="position:absolute; left:768px; top:432px; width:64px; height:96px;" />
+			<img id="dia-12" style="position:absolute; left:864px; top:384px; width:64px; height:96px;" />
+			<img id="dia-15" style="position:absolute; left:768px; top:528px; width:64px; height:96px;" />
+			<img id="dia-13" style="position:absolute; left:864px; top:480px; width:64px; height:96px;" />
 			
 			<!--
 				バック
@@ -721,20 +721,20 @@
 				16      19
 				    18
 			-->
-			<img id="dia-3" style="position:absolute; left:128px; top:688px; width:64px; height:96px;" />
-			<img id="dia-2" style="position:absolute; left:224px; top:640px; width:64px; height:96px;" />
-			<img id="dia-1" style="position:absolute; left:128px; top:784px; width:64px; height:96px;" />
-			<img id="dia-0" style="position:absolute; left:224px; top:736px; width:64px; height:96px;" />
+			<img id="dia-3" style="position:absolute; left:48px; top:336px; width:64px; height:96px;" />
+			<img id="dia-2" style="position:absolute; left:144px; top:288px; width:64px; height:96px;" />
+			<img id="dia-1" style="position:absolute; left:48px; top:432px; width:64px; height:96px;" />
+			<img id="dia-0" style="position:absolute; left:144px; top:384px; width:64px; height:96px;" />
 
-			<img id="dia-5" style="position:absolute; left:288px; top:640px; width:64px; height:96px;" />
-			<img id="dia-7" style="position:absolute; left:384px; top:688px; width:64px; height:96px;" />
-			<img id="dia-4" style="position:absolute; left:288px; top:736px; width:64px; height:96px;" />
-			<img id="dia-6" style="position:absolute; left:384px; top:784px; width:64px; height:96px;" />
+			<img id="dia-5" style="position:absolute; left:208px; top:288px; width:64px; height:96px;" />
+			<img id="dia-7" style="position:absolute; left:304px; top:336px; width:64px; height:96px;" />
+			<img id="dia-4" style="position:absolute; left:208px; top:384px; width:64px; height:96px;" />
+			<img id="dia-6" style="position:absolute; left:304px; top:432px; width:64px; height:96px;" />
 
-			<img id="dia-17" style="position:absolute; left:224px; top:832px; width:128px; height:64px;" />
-			<img id="dia-19" style="position:absolute; left:320px; top:880px; width:128px; height:64px;" />
-			<img id="dia-16" style="position:absolute; left:128px; top:880px; width:128px; height:64px;" />
-			<img id="dia-18" style="position:absolute; left:224px; top:928px; width:128px; height:64px;" />
+			<img id="dia-17" style="position:absolute; left:144px; top:480px; width:128px; height:64px;" />
+			<img id="dia-19" style="position:absolute; left:240px; top:528px; width:128px; height:64px;" />
+			<img id="dia-18" style="position:absolute; left:144px; top:576px; width:128px; height:64px;" />
+			<img id="dia-16" style="position:absolute; left:48px; top:528px; width:128px; height:64px;" />
 			
 			<!--
 				展開図
@@ -745,35 +745,35 @@
 				      20 21
 					  22 23
 			-->
-			<img id="tile-0" style="position:absolute; left:832px; top:64px; width:96px; height:96px;" />
-			<img id="tile-1" style="position:absolute; left:960px; top:64px; width:96px; height:96px;" />
-			<img id="tile-2" style="position:absolute; left:832px; top:192px; width:96px; height:96px;" />
-			<img id="tile-3" style="position:absolute; left:960px; top:192px; width:96px; height:96px;" />
+			<img id="tile-0" style="position:absolute; left:144px; top:688px; width:48px; height:48px;" />
+			<img id="tile-1" style="position:absolute; left:208px; top:688px; width:48px; height:48px;" />
+			<img id="tile-2" style="position:absolute; left:144px; top:752px; width:48px; height:48px;" />
+			<img id="tile-3" style="position:absolute; left:208px; top:752px; width:48px; height:48px;" />
 
-			<img id="tile-4" style="position:absolute; left:576px; top:320px; width:96px; height:96px;" />
-			<img id="tile-5" style="position:absolute; left:704px; top:320px; width:96px; height:96px;" />
-			<img id="tile-6" style="position:absolute; left:576px; top:448px; width:96px; height:96px;" />
-			<img id="tile-7" style="position:absolute; left:704px; top:448px; width:96px; height:96px;" />
+			<img id="tile-4" style="position:absolute; left:16px; top:816px; width:48px; height:48px;" />
+			<img id="tile-5" style="position:absolute; left:80px; top:816px; width:48px; height:48px;" />
+			<img id="tile-6" style="position:absolute; left:16px; top:880px; width:48px; height:48px;" />
+			<img id="tile-7" style="position:absolute; left:80px; top:880px; width:48px; height:48px;" />
 
-			<img id="tile-8" style="position:absolute; left:832px; top:320px; width:96px; height:96px;" />
-			<img id="tile-9" style="position:absolute; left:960px; top:320px; width:96px; height:96px;" />
-			<img id="tile-10" style="position:absolute; left:832px; top:448px; width:96px; height:96px;" />
-			<img id="tile-11" style="position:absolute; left:960px; top:448px; width:96px; height:96px;" />
+			<img id="tile-8" style="position:absolute; left:144px; top:816px; width:48px; height:48px;" />
+			<img id="tile-9" style="position:absolute; left:208px; top:816px; width:48px; height:48px;" />
+			<img id="tile-10" style="position:absolute; left:144px; top:880px; width:48px; height:48px;" />
+			<img id="tile-11" style="position:absolute; left:208px; top:880px; width:48px; height:48px;" />
 
-			<img id="tile-12" style="position:absolute; left:1088px; top:320px; width:96px; height:96px;" />
-			<img id="tile-13" style="position:absolute; left:1216px; top:320px; width:96px; height:96px;" />
-			<img id="tile-14" style="position:absolute; left:1088px; top:448px; width:96px; height:96px;" />
-			<img id="tile-15" style="position:absolute; left:1216px; top:448px; width:96px; height:96px;" />
+			<img id="tile-12" style="position:absolute; left:272px; top:816px; width:48px; height:48px;" />
+			<img id="tile-13" style="position:absolute; left:336px; top:816px; width:48px; height:48px;" />
+			<img id="tile-14" style="position:absolute; left:272px; top:880px; width:48px; height:48px;" />
+			<img id="tile-15" style="position:absolute; left:336px; top:880px; width:48px; height:48px;" />
 
-			<img id="tile-16" style="position:absolute; left:1344px; top:320px; width:96px; height:96px;" />
-			<img id="tile-17" style="position:absolute; left:1472px; top:320px; width:96px; height:96px;" />
-			<img id="tile-18" style="position:absolute; left:1344px; top:448px; width:96px; height:96px;" />
-			<img id="tile-19" style="position:absolute; left:1472px; top:448px; width:96px; height:96px;" />
+			<img id="tile-16" style="position:absolute; left:400px; top:816px; width:48px; height:48px;" />
+			<img id="tile-17" style="position:absolute; left:464px; top:816px; width:48px; height:48px;" />
+			<img id="tile-18" style="position:absolute; left:400px; top:880px; width:48px; height:48px;" />
+			<img id="tile-19" style="position:absolute; left:464px; top:880px; width:48px; height:48px;" />
 			
-			<img id="tile-20" style="position:absolute; left:832px; top:576px; width:96px; height:96px;" />
-			<img id="tile-21" style="position:absolute; left:960px; top:576px; width:96px; height:96px;" />
-			<img id="tile-22" style="position:absolute; left:832px; top:704px; width:96px; height:96px;" />
-			<img id="tile-23" style="position:absolute; left:960px; top:704px; width:96px; height:96px;" />
+			<img id="tile-20" style="position:absolute; left:144px; top:944px; width:48px; height:48px;" />
+			<img id="tile-21" style="position:absolute; left:208px; top:944px; width:48px; height:48px;" />
+			<img id="tile-22" style="position:absolute; left:144px; top:1008px; width:48px; height:48px;" />
+			<img id="tile-23" style="position:absolute; left:208px; top:1008px; width:48px; height:48px;" />
 
 			<!-- ボタンの下に表示する。 -->
 			<img id="congratulations" src="./img/congratulations.png" style="visibility:hidden; position:absolute; left:0px; top:0px;" />
@@ -782,31 +782,31 @@
 			<a href="javascript: restoreProblem();" style="position:absolute; left:420px; top:8px; font-size:20px;">再挑戦</a>
 			<a href="javascript: exit();" style="position:absolute; left:500px; top:8px; font-size:20px;">Exit</a>
 			<a href="javascript: showAnswer();" style="position:absolute; left:500px; top:36px; font-size:20px;">解答を見る</a>
-			<span id="stageLabel" style="position:absolute; left:550px; top:4px; font-size:28px; font-weight:bold;">ステージ ラベル</span>
-			<span id="record" style="position:absolute; left:512px; top:832px; width:1376px; height:80px; font-size:28px;"></span>
-			<span id="answer" style="position:absolute; left:512px; top:912px; width:1376px; height:80px; font-size:28px; color:orange;"></span>
+			<span id="talkText" style="position:absolute; left:1120px; top:496px; width:768px; height:160px; font-size:28px; font-weight:bold;">台詞</span>
+			<span id="record" style="position:absolute; left:628px; top:914px; width:1264px; height:64px; font-size:28px;"></span>
+			<span id="answer" style="position:absolute; left:624px; top:992px; width:1264px; height:64px; font-size:28px; color:orange;"></span>
 
 			<!-- 回転ボタン。 -->
-			<a href="javascript: rotate(0);" style="position:absolute; left:352px; top:96px; font-size:24px;">Rotate0</a>
-			<a href="javascript: rotate(1);" style="position:absolute; left:448px; top:160px; font-size:24px;">R1</a>
-			<a href="javascript: rotate(2);" style="position:absolute; left:448px; top:256px; font-size:24px;">R2</a>
-			<a href="javascript: rotate(3);" style="position:absolute; left:448px; top:352px; font-size:24px;">R3</a>
-			<a href="javascript: rotate(4);" style="position:absolute; left:384px; top:448px; font-size:24px;">R4</a>
-			<a href="javascript: rotate(5);" style="position:absolute; left:288px; top:480px; font-size:24px;">R5</a>
-			<a href="javascript: rotate(6);" style="position:absolute; left:224px; top:480px; font-size:24px;">R6</a>
-			<a href="javascript: rotate(7);" style="position:absolute; left:128px; top:448px; font-size:24px;">R7</a>
-			<a href="javascript: rotate(8);" style="position:absolute; left:64px; top:352px; font-size:24px;">R8</a>
-			<a href="javascript: rotate(9);" style="position:absolute; left:64px; top:256px; font-size:24px;">R9</a>
-			<a href="javascript: rotate(10);" style="position:absolute; left:64px; top:160px; font-size:24px;">R10</a>
-			<a href="javascript: rotate(11);" style="position:absolute; left:160px; top:96px; font-size:24px;">R11</a>
+			<a href="javascript: rotate(0);" style="position:absolute; left:832px; top:256px; font-size:24px;">Rotate0</a>
+			<a href="javascript: rotate(1);" style="position:absolute; left:928px; top:320px; font-size:24px;">R1</a>
+			<a href="javascript: rotate(2);" style="position:absolute; left:928px; top:416px; font-size:24px;">R2</a>
+			<a href="javascript: rotate(3);" style="position:absolute; left:928px; top:512px; font-size:24px;">R3</a>
+			<a href="javascript: rotate(4);" style="position:absolute; left:864px; top:608px; font-size:24px;">R4</a>
+			<a href="javascript: rotate(5);" style="position:absolute; left:768px; top:640px; font-size:24px;">R5</a>
+			<a href="javascript: rotate(6);" style="position:absolute; left:704px; top:640px; font-size:24px;">R6</a>
+			<a href="javascript: rotate(7);" style="position:absolute; left:608px; top:608px; font-size:24px;">R7</a>
+			<a href="javascript: rotate(8);" style="position:absolute; left:544px; top:512px; font-size:24px;">R8</a>
+			<a href="javascript: rotate(9);" style="position:absolute; left:544px; top:416px; font-size:24px;">R9</a>
+			<a href="javascript: rotate(10);" style="position:absolute; left:544px; top:320px; font-size:24px;">R10</a>
+			<a href="javascript: rotate(11);" style="position:absolute; left:640px; top:256px; font-size:24px;">R11</a>
 			
 			<!-- 視角ボタン。 -->
-			<a href="javascript: rotateAngle(0);" style="position:absolute; left:448px; top:80px; font-size:20px;">Angle+Y</a>
-			<a href="javascript: rotateAngle(1);" style="position:absolute; left:512px; top:288px; font-size:20px;">+Z</a>
-			<a href="javascript: rotateAngle(2);" style="position:absolute; left:336px; top:512px; font-size:20px;">+X</a>
-			<a href="javascript: rotateAngle(3);" style="position:absolute; left:176px; top:512px; font-size:20px;">-Y</a>
-			<a href="javascript: rotateAngle(4);" style="position:absolute; left:0px; top:288px; font-size:20px;">-Z</a>
-			<a href="javascript: rotateAngle(5);" style="position:absolute; left:64px; top:80px; font-size:20px;">-X</a>
+			<a href="javascript: rotateAngle(0);" style="position:absolute; left:928px; top:240px; font-size:20px;">Angle+Y</a>
+			<a href="javascript: rotateAngle(1);" style="position:absolute; left:992px; top:448px; font-size:20px;">+Z</a>
+			<a href="javascript: rotateAngle(2);" style="position:absolute; left:816px; top:672px; font-size:20px;">+X</a>
+			<a href="javascript: rotateAngle(3);" style="position:absolute; left:656px; top:672px; font-size:20px;">-Y</a>
+			<a href="javascript: rotateAngle(4);" style="position:absolute; left:480px; top:448px; font-size:20px;">-Z</a>
+			<a href="javascript: rotateAngle(5);" style="position:absolute; left:554px; top:240px; font-size:20px;">-X</a>
 			
 		</div>
 	</div>
