@@ -62,6 +62,8 @@
 							document.getElementById("talkText").innerHTML = talkText;
 							document.getElementById("hint").src = "./img/hint-" + problemId +".png";
 							document.getElementById("hint").style.visibility = "visible";
+							document.getElementById("face").src = "./img/face-" + problemId +".png";
+							document.getElementById("face").style.visibility = "visible";
 							scene = "finished";
 							break;
 					}
@@ -70,6 +72,17 @@
 			);
 		}
 
+		/** ステージの初期化。 */
+		function initStage() {
+			// 棋譜。
+			record = "";
+			document.getElementById("record").innerHTML = record;
+			
+			// 解答。
+			answerList = [];
+			document.getElementById("answer").innerHTML = "";
+		}
+		
 		/** ゲーム画面の初期化。 */
 		function init() {
 			scene = "title-0";
@@ -80,18 +93,13 @@
 			document.getElementById("development-scene").style.visibility = "hidden";
 			document.getElementById("congratulations").style.visibility = "hidden";
 			document.getElementById("hint").style.visibility = "hidden";
-			
-			// 棋譜。
-			record = "";
-			document.getElementById("record").innerHTML = record;
-			
-			// 解答。
-			answerList = [];
-			document.getElementById("answer").innerHTML = "";
+			document.getElementById("face").style.visibility = "hidden";
+			initStage();
 		}
 		
 		/** ゲームを開始します。 */
 		function startStage(stageNumber) {
+			initStage();
 			problemId = stageNumber;
 			scene = "start-game";			
 		}
@@ -101,7 +109,7 @@
 			problemId = problemId + 1;
 
 			// スキップ。
-			if(problemId == 7) {
+			if(problemId == 8) {
 				problemId = 12;
 			}
 			
@@ -482,6 +490,42 @@
 					rotateInProblem(handle1);
 					break;
 
+				case 7:
+				
+					// 河城にとり
+					talkText='河城にとり 「３つは同じ色なのに、１つだけ違う色になってしまった。揃えてくれないか？」';
+					
+					// ２軸に ひねり、次に同じ２軸を逆にひねる。これで１か所はぐれる。
+					var verticalHandles = [0, 1, 6, 7];
+					var horizontalHandles = [2, 3, 8, 9];
+					var dialHandles = [4, 5, 10, 11];
+					
+					var handle0;
+					var handle1;
+					
+					// 0～2
+					switch(Math.round( Math.random()*2 ))
+					{
+						case 0:
+							handle0 = verticalHandles[ Math.round( Math.random()*3 )];
+							handle1 = horizontalHandles[ Math.round( Math.random()*3 )];
+							break;
+						case 1:
+							handle0 = verticalHandles[ Math.round( Math.random()*3 )];
+							handle1 = dialHandles[ Math.round( Math.random()*3 )];
+							break;
+						default:
+							handle0 = horizontalHandles[ Math.round( Math.random()*3 )];
+							handle1 = dialHandles[ Math.round( Math.random()*3 )];
+							break;
+					}
+					
+					rotateInProblem(handle0);
+					rotateInProblem(handle1);
+					rotateInProblem(getReversedHandle(handle0));
+					rotateInProblem(getReversedHandle(handle1));
+					break;
+
 				case 12:
 				default:
 				
@@ -690,9 +734,9 @@
 			<a href="javascript: void(0);" style="position:absolute; left:560px; top:670px; font-size:32px;" onclick="startStage(4);">4.高麗野あうん レベル</a>
 			<a href="javascript: void(0);" style="position:absolute; left:560px; top:710px; font-size:32px;" onclick="startStage(5);">5.鈴瑚　レベル</a>
 			<a href="javascript: void(0);" style="position:absolute; left:560px; top:750px; font-size:32px;" onclick="startStage(6);">6.紅美鈴　レベル</a>
+			<a href="javascript: void(0);" style="position:absolute; left:960px; top:550px; font-size:32px;" onclick="startStage(7);">7.河城にとり レベル</a>
 			<!-- TODO もっと簡単なレベルを用意せな……☆ -->
 			<!--
-			<a href="javascript: problemId=7; talkText='紅美鈴 レベル'; void(0);" style="position:absolute; left:960px; top:550px; font-size:32px;" onclick="startStage();">7.紅美鈴 レベル</a>
 			<a href="javascript: problemId=8; talkText='雲居一輪 レベル'; void(0);" style="position:absolute; left:960px; top:590px; font-size:32px;" onclick="startStage();">8.雲井一輪 レベル</a>
 			<a href="javascript: problemId=16; talkText='魔理沙 レベル'; void(0);" style="position:absolute; left:960px; top:630px; font-size:32px;" onclick="startStage();">9.魔理沙 レベル</a>
 			<a href="javascript: problemId=23; talkText='宇佐美菫子 レベル'; void(0);" style="position:absolute; left:960px; top:670px; font-size:32px;" onclick="startStage();">10.宇佐美菫子 レベル</a>
@@ -794,7 +838,7 @@
 
 			<!-- ボタンの下に表示する。 -->
 			<img id="hint" style="position:absolute; left:1104px; top:160px; width:400px; height:320px;" />
-			<!--<img id="face" style="position:absolute; left:1504px; top:160px; width:400px; height:320px;" />-->
+			<img id="face" style="position:absolute; left:1504px; top:160px; width:400px; height:320px;" />
 			<img id="congratulations" src="./img/congratulations.png" style="visibility:hidden; position:absolute; left:0px; top:0px;" />
 			
 			<!-- ボタン。 -->
