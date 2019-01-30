@@ -1,14 +1,27 @@
 // TODO 局面クラスを作りたい。
 var Position = function () {
-	// 色。 r, g, b, y, v, g.
-	this.tiles = [];
+	// 色。 r, g, b, y, v, w.
+	this.tiles = ["y", "y", "y", "y", 
+		"v", "v", "v", "v",
+		"r", "r", "r", "r",
+		"b", "b", "b", "b",
+		"w", "w", "w", "w",
+		"g", "g", "g", "g"];
+};
+Position.prototype.dump = function () {
+	var text = "";
+	for (var tile = 0; tile < 24; tile++)
+	{
+		text += this.tiles[tile];
+	}			
+	return text;
 };
 Position.prototype.copyFrom = function (pos) {
 	this.tiles = pos.tiles.slice();
 };
 Position.prototype.parse = function (text) {
-	// スラッシュを消して詰める。
-	text = text.replace("/", "");
+	// スラッシュを全て消して詰める。
+	text = text.replace(/\//g, "");
 	
 	// 全ての色をセットする。
 	for (var tile = 0; tile < 24; tile++)
@@ -25,7 +38,7 @@ Position.prototype.getBoardText = function () {
 		this.tiles[20] + this.tiles[21] + this.tiles[22] + this.tiles[23];
 };
 Position.prototype.shift4 = function (a, b, c, d) {
-	var temp = this.tiles(d);
+	var temp = this.tiles[d];
 	this.tiles[d] = this.tiles[c];
 	this.tiles[c] = this.tiles[b];
 	this.tiles[b] = this.tiles[a];
@@ -217,8 +230,8 @@ function normalize(posSource)
 	}
 
 	// 辞書順ソートする。
-	isomorphicText.Sort();
-
+	isomorphicText.sort();
+	
 	var result = new Position();
 	result.parse(isomorphicText[0]);
 	return result;
