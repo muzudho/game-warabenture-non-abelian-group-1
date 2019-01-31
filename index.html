@@ -6,10 +6,16 @@
 	
 	<!-- 局面。 -->
 	<script src="position.js"></script>
+
+	<!-- 回転ボタン。 -->
+	<script src="rotateButtonGroup.js"></script>
+
+	<!-- 正規化。 -->
+	<script src="normalizer.js"></script>
 	
 	<!-- 定跡。 -->
 	<script src="book.js"></script>
-	
+		
 	<script>
 		var scene = "";
 		var intervalFrame = 0;
@@ -963,9 +969,12 @@
 			// alert("正規化前 currentBoardText=" + currentPosition.getBoardText());
 			
 			// 正規化する。つまり、６４個の同型のうち、代表的な１つに置き換える。（定跡を64分の1サイズに圧縮できる）
-			currentPosition = normalize(currentPosition);
+			var normalizer = new Normalizer();
+			var normalizedCurrentPosition;
+			var unusedHanlde;
+			normalizedCurrentPositionAndHanlde = normalizer.normalize(currentPosition, 0);
 			
-			var currentBoardText = currentPosition.getBoardText();
+			var currentBoardText = normalizedCurrentPositionAndHanlde[0].getBoardText();
 			
 			// alert("正規化後 currentBoardText=" + currentBoardText);
 			
