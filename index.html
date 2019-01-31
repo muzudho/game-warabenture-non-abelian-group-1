@@ -3,7 +3,13 @@
 <head>
 	<meta charset="UTF-8">
 	<title>非可換な群 (MIT ライセンス / 改造・再配布許可)</title>
+	
+	<!-- 局面。 -->
 	<script src="position.js"></script>
+	
+	<!-- 定跡。 -->
+	<script src="book.js"></script>
+	
 	<script>
 		var scene = "";
 		var intervalFrame = 0;
@@ -256,7 +262,7 @@
 
 		/**
 			視角を回すだけ。
-			  5  0			  	    
+			  5  0
 			4      1
 			  3  2
 		 */
@@ -304,7 +310,15 @@
 			rotateButtonAngle(handle);
 		}
 		
-		/** 回転ボタンのラベルを入れ替えます。 */
+		/**
+			フロント、バックの回転ボタンのラベル４つを、ずらします。
+			  11 0
+			10	   1
+			9	    2
+			8		3
+			 7     4
+			   6 5
+		*/
 		function shift4RotateButton(a, b, c, d) {
 			// フロント
 			var tempLabel = document.getElementById("front-r" + a + "-button").textContent;
@@ -323,9 +337,12 @@
 		
 		/**
 			回転ボタンの場所を入れ替える。
-			  5  0			  	    
-			4      1
-			  3  2
+			  11 0
+			10	   1
+			9	    2
+			8		3
+			 7     4
+			   6 5
 		 */
 		function rotateButtonAngle(handle) {
 			switch(handle)
@@ -935,6 +952,8 @@
 			return pos;
 		}
 
+		var book = new Book();
+		
 		/** 定跡を見て、次の１手を返す。なければ -1。 */
 		function getMoveByBook()
 		{
@@ -951,7 +970,8 @@
 			// alert("正規化後 currentBoardText=" + currentBoardText);
 			
 			// 定跡。
-			var bookLines = document.getElementById("book-min").textContent.replace("\r", "").split("\n");
+			var bookLines = book.getText().replace("\r", "").split("\n");
+			// alert("bookLines.length=" + bookLines.length);
 			
 			for(i=0; i<bookLines.length; i++)
 			{
@@ -1154,641 +1174,5 @@
 	<!-- 裏を隠す板。 -->
 	<div style="position:absolute; top:0px; left:1920px; width:1920px; height:1080px; background-color:white;">
 	</div>
-	
-	<!-- 定跡 -->
-	<textarea id="book-min" style="visibility:hidden;">bbrr/wbwb/yyyy/vrvr/gggg/wwvv 4
-bbrr/wbyy/yyvr/vrgg/ggwb/wvwv 6
-bbgr/ywyb/byrr/vrgg/gwww/yvvv 11
-bbgr/ywww/byyb/vrrr/gwgg/vyvv 1
-bbww/yvwy/ybby/grrr/gwgg/rvvv 5
-bbww/yvby/ybrr/grgg/gwwy/vvrv 8
-brvr/wrby/ybvy/yvwv/gggr/wbgw 10
-bgyg/gwwb/vwyr/brvr/vryg/wyvb 2
-bbvv/wrvy/ywwg/gyrv/rgry/bbwg 5
-bbvv/wrry/ywvy/gywg/rgrv/wbgb 9
-bbyr/wwrb/vyyw/vyvg/rgrv/wggb 11
-bbyr/wwyw/vyvg/vyrv/rgrb/gbwg 2
-brgr/ywyr/bbvr/yvbg/gwww/ygvv 6
-bryv/rvrb/rywy/wgwv/bygv/gbgw 8
-bryr/wwyg/vyrb/vvrg/ggwb/bywv 1
-bbrr/rvrv/gggg/bwbw/yyyy/wwvv 5
-bbrr/rvyy/ggrv/bwgg/yybw/vwvw 7
-bbyv/rvyw/rgvg/rwrg/yybw/gbvw 11
-bbyv/rvvg/rgrg/rwbw/yyyw/bwgv 2
-bbbr/yyyw/rvvy/ggrr/wwbw/gvvg 6
-bbbr/yyvy/rvrr/ggbw/wwyw/vggv 8
-bbyy/yvvg/rrrv/bgrw/wwyw/bggv 11
-bgrw/rvby/gvrr/ywbg/byww/vgyv 3
-bvrr/rvby/ggrv/bygw/wygw/vwyb 5
-bgyb/rwbr/vrgr/gwvg/byww/vyyv 0
-bggv/gwvg/bywb/wrrb/vryr/vyyw 2
-bggw/gvvy/wbby/grvb/vryr/rwyw 7
-bbgy/gvvy/wwbw/vgbr/wrgr/ryyv 9
-bbyv/grvy/bwww/ggyr/wrgr/bvyv 1
-bbbb/ggww/wwyy/yyrr/rrgg/vvvv 6
-bbwy/rbgb/gwgw/vwvy/yyrr/rgvv 8
-bbwy/rbgw/gwvy/vwrr/yygb/gvrv 0
-bbbw/yygb/rggv/vgyw/wwyr/rrvv 3
-bbbw/yyyr/rggb/vggv/wwyw/vrvr 7
-bwww/wvyv/yyry/bgbb/vggv/grrr 9
-bbyy/gbvg/wwwb/vywr/rrgr/vgyv 0
-bgyr/gbvg/wbwy/yrvw/vrgr/vwyb 4
-bgyb/yvrg/rgrv/wvrw/wwyb/bgyv 6
-bgwv/rygv/byyw/wrvw/vygb/rgrb 10
-bgvy/rrgg/ybwy/wrvw/vygb/vwrb 1
-bgvy/rrgb/ybgg/wrwy/vyvw/rvbw 3
-bgyg/yvyr/rbgb/rvrg/wwbw/vyvw 7
-bgrr/ygyy/bbrg/yvvg/wwbw/vrvw 10
-bbrw/ygyy/bgrr/vgyv/wwrw/vbvg 2
-bbbb/ggrr/wwgg/yyww/rryy/vvvv 1
-bbgw/wvgv/wywy/brby/ggrr/yrvv 3
-bbgr/ybwb/ryry/vgvr/wwgg/ywvv 4
-bbyw/gbwg/wgvw/vyyy/rrrb/rvgv 8
-bbbg/rrrb/grwv/vwwg/yywy/gyvv 5
-bbbg/rrwy/grrb/vwwv/yywg/vgvy 7
-bbbr/ggry/wvvw/gybg/rrwy/wyvv 11
-bbbr/ggvw/wvbg/gywy/rrry/yvwv 2
-bbrr/wbbr/yygw/vrvy/ggvw/vgyw 4
-bbrr/wbgw/yyvy/vrvw/ggbr/gwvy 8
-bbbw/ggbr/wggw/vyyy/rrrw/vvyv 11
-bbbw/ggrw/wgbr/vygw/rryy/yvvv 3
-bbrg/wvbv/gvwy/wrby/ggrw/yryv 5
-bggw/grrb/vvwb/yvyy/wrby/gwvr 8
-bbgg/ybyb/rrrr/vgvg/wwww/yyvv 2
-bbyy/gbww/wwvy/vyrr/rrgb/gvgv 4
-bgyr/gbww/wbvy/yrvr/vrvb/gwgy 8
-bgwb/ggww/vwyb/yrrr/vrvb/vygy 11
-bgwb/ggvb/vwww/yryb/vrrr/gvyy 1
-brgr/yryb/vyrg/vgbg/bwww/ywvv 5
-bvrv/rvgy/gyry/wwwb/gygw/vbbr 8
-bvry/wgyg/bvwb/rgyy/rgvr/vwbw 0
-bvry/wgwb/bvyy/rgvr/rgyg/wwvb 2
-bvry/wgwb/bwyb/vrrg/ygvg/wyvr 5
-bwyb/gbvb/wyww/rvvr/yrgr/ggyv 9
-brwr/rvvr/yygg/vgbb/byyw/vwgw 11
-bwrv/gbvy/ywww/gvgr/yrgr/bbyv 6
-bgry/gbvy/ywwv/vrgg/vrbr/bwyw 8
-bbgv/yrwy/vrbb/yggy/wwvg/rrvw 6
-bbrv/gvbr/gwvy/gyww/rryg/ybwv 0
-bbyy/gbrr/wwgb/vyww/rrvy/vgvg 5
-bbbr/rrvy/gvrg/gwbw/yyyw/vwgv 9
-bbyr/rvvw/rggv/bwrw/yyyw/bggv 11
-bbyr/rvgv/rgrw/bwyw/yyvw/gvbg 2
-bbby/rrgy/gwrr/vwgw/yyvw/vvbg 6
-bbby/rrrr/gwgw/vwvw/yygy/vgvb 8
-bbrr/rvrg/ggww/bwyw/yygy/vvvb 1
-bbrr/rvgy/ggrg/bwww/yyyw/vvbv 3
-bgrg/rvgy/gvrv/wbww/rybw/vyby 5
-bbbw/rrgr/gggr/vwvw/yyyw/vybv 0
-bbbw/rrgr/ggvw/vwyw/yygr/yvvb 4
-bbwg/gvvb/yvww/wybr/rrgr/gyyv 7
-bgrr/rygg/vgbv/bvww/wybr/wyvy 9
-bbgg/gvgv/wwww/byby/rrrr/yyvv 3
-bbgg/gvww/wwby/byrr/rrgv/yvyv 6
-bbbr/ggwg/wywb/vyyr/rrgv/vwyv 10
-bbrg/wbwr/yrvy/vrwv/ggwg/ybvy 0
-bbrg/wbwg/yrwr/vrvy/ggwv/vyyb 3
-bbbg/ggwv/wvwy/wyrr/rrgy/yvbv 7
-bbbg/gggy/wvwv/wywy/rrrr/byvv 9
-bbwr/ggwb/vyww/vyyr/rrgy/gvbv 4
-bgwy/yvrv/yvry/rwbv/bwgg/grbw 6
-bgwy/yvry/yvbv/rwgg/bwrv/rwgb 10
-bgrg/gyww/vvyb/wrry/vrwb/vygb 1
-bgrg/wgwy/bvrb/wrry/vgwv/vyyb 5
-bgrg/wgwv/bvwy/wrrb/vgry/yvby 7
-bgwg/gvww/yvby/wrrb/vrrb/yvgy 10
-bgyb/rvrr/rwbg/ywww/byyv/gvgv 3
-bbvr/yrwg/ybby/yrvr/gwgg/wwvv 10
-bbvr/yrby/ybvr/yrgg/gwwg/wvwv 2
-bbvr/yrby/yvvv/gygr/rwbg/wwwg 5
-bbyr/ywbw/vyvv/vyrr/rwbg/ggwg 7
-brgw/gvgv/wbwy/gbwr/yrvr/ybvy 11
-brgw/rwww/byyv/byrr/vybg/vgvg 2
-bvgy/gvww/wrgw/brbr/yrgv/byyv 6
-byrr/wvvy/gyvr/vbbb/wgrw/wggy 8
-byrr/wvvy/ggvy/bvbb/rgyw/wrgw 11
-bggg/gvvr/wwyv/brww/vrbr/byyy 4
-bbrr/yyyb/vvrr/ggbg/wwww/ygvv 8
-bbby/yyyg/rvrv/rgrg/wwww/bgvv 11
-bbby/yyww/rvyg/rgrv/wwrg/vbvg 3
-bbwy/yvwb/yrgv/bgyv/wwrg/rrvg 5
-bbwy/yvgv/yryv/bgrg/wwwb/rgrv 8
-bgrg/rvrr/gvbw/wwbw/byyy/gyvv 0
-bgwb/rgrr/vwgb/ywgw/byyy/vrvv 2
-bwwb/gyww/bygy/rgrr/vrgv/bvyv 7
-bvgw/wbyw/rvvg/yrvr/ygyb/grwb 9
-bvgg/wbyw/rrvb/vyrr/wgvb/gywy 11
-bbww/wvvr/yyyv/bryg/ggwg/brrv 11
-bbby/wwvw/yvyy/rrbg/ggwg/vrrv 9
-bbgw/ybyy/rgrb/vgrg/wwvw/vyvr 7
-bbww/wvyy/yybr/brgg/ggwv/rvrv 8
-byry/rvgr/gbbb/wwwy/vyrv/ggwv 0
-bgyy/gbwb/wwwy/vrrb/vrrg/gvvy 2
-brrv/rvgv/gygr/wyby/vyww/wgbb 5
-bwvw/wryv/yywb/bggg/vgvr/yrbr 9
-bvyb/gbgg/wgwr/wryv/yrwr/vbvy 11
-bwrw/gygy/vbww/gvvy/yrbr/bgvr 6
-bbry/gygy/vwww/vygv/rrgr/bbvw 8
-bbry/gygr/vwgy/vyww/rrgv/vbwb 1
-bbry/gvgb/gvyw/ryyw/rrgv/wvwb 3
-bbry/gvgv/gvgb/ryyw/rryw/wwbv 7
-bbvw/yrwy/ygbg/vgvg/wwrv/rryb 10
-bygg/rrgg/vvbb/wvyw/ryyb/wwrv 0
-bbyw/wvyv/ryry/brbg/ggww/grvv 9
-bbyw/wvww/ryyv/brry/ggbg/vgvr 1
-brry/yvby/grry/bgvv/bwgg/vwww 3
-bwgg/gvwv/wwyv/byry/brbv/rgyr 6
-bbrw/wvwy/gyry/brbv/ggwg/vrvy 10
-bbbb/ggwg/wwwr/yygr/rrvv/vvyy 0
-bbgg/gvwv/wwrw/bybr/rrvv/gyyy 5
-bbgg/gvvv/wwwv/byrw/rrbr/ygyy 7
-bryy/ywgw/vvvg/rbrg/ywbr/gbvw 9
-bbbr/ggvg/wvww/gyyw/rrbr/vvyy 4
-brww/rbbb/gggv/vvyw/gyyw/rryv 8
-bgwv/rbbb/grgv/yvwv/wyrw/ryyg 11
-bgwv/rbrw/grbb/yvgv/wywv/yrgy 1
-bbwy/yvwv/yryr/bgbr/wwgg/rgvv 9
-bbry/wbgb/ywyw/vrvy/ggrr/wgvv 10
-bbry/wbyw/ywvy/vrrr/gggb/gvwv 2
-bbgy/ywwb/bwry/vrrr/gwgg/yvvv 11
-bbgy/ywgg/bwwb/vrry/gwrr/vyvv 1
-bbgw/yvgy/wbbw/gryy/gwrr/rvvv 5
-bbgw/yvbw/wbyy/grrr/gwgy/vvrv 8
-bggg/yvbw/wbyw/rrgr/vwvy/vbry 10
-bggg/yvyw/wbgr/rrvy/vwbw/byvr 2
-bbgr/yvyw/wygr/vryr/gwgw/bbvv 5
-bbgr/yvgw/wyyw/vrgr/gwyr/vbvb 9
-bbwy/wgyb/vwyg/vyvg/rgrv/wrrb 11
-bbwy/wgyg/vwvg/vyrv/rgyb/rbwr 2
-bbyy/gbgb/wwww/vyvy/rrrr/ggvv 8
-bryr/gbgb/wbwy/yyvv/vrgr/gwvw 10
-bryr/gbwy/wbvv/yygr/vrgb/wwgv 2
-bryb/gwww/vwvb/yyrr/vrgb/gygv 5
-bgwg/wvww/ybbr/rrvr/vgyg/yyvb 7
-bbwr/wvww/yybb/vrrr/gggg/yyvv 11
-bbvr/wrww/ybyb/yryr/gggg/vwvv 2
-bbvr/wryb/ybyr/yrgg/ggww/wvvv 6
-brwv/ryby/byrw/wvgv/gygr/vbgw 8
-bbrw/yyrb/vggg/vgvw/wwyb/rryv 11
-bbrw/yyyb/vgrb/vggg/wwvw/yrvr 3
-bgrb/yyyb/vrrr/gvgg/wwbw/yvvw 5
-bbvg/ywyr/gbvr/rgyg/wwvw/ybvr 0
-bggv/wvvb/wryy/ybvr/rgyg/wwrb 2
-bbyy/yvyv/rrrr/bgbg/wwww/ggvv 9
-bryr/yvyv/rgrv/bbgg/ywbw/gwvw 11
-bryr/yvbw/rgyv/bbrv/ywgg/vgww 3
-bvgv/rrbb/vygr/wwvw/gygw/ryyb 6
-bvgv/rrgr/vyvw/wwgw/gybb/ybry 8
-bbyy/grrr/bbgg/wgww/wryy/vvvv 0
-bbyy/gryy/bbrr/wggg/wrww/vvvv 3
-bvrv/rygy/vwvw/gggw/rybb/wbry 7
-bbyr/gvyw/rbvv/ywrg/yrbw/ggvw 9
-bbyr/gvvv/rbrg/ywbw/yryw/gwgv 0
-bbby/yryw/grvy/bgrr/wwgw/gvvv 4
-byyy/grvy/bbrb/wwwg/vrvw/vggr 6
-byww/gyvy/bbbr/gwvg/vrvw/rygr 10
-bbwr/gyvy/bybr/vggw/wryw/rvgv 1
-bbwr/gyyw/byvy/vgbr/wrgw/grvv 3
-bbyy/yvrr/rrbg/bgww/wwyv/gvgv 0
-bryb/grgg/bgww/wyyb/vryr/vvvw 4
-bgyb/rwgw/vwvv/ywry/byrb/ggrv 6
-bgyb/rwrb/vwgw/ywvv/byry/rgvg 9
-byry/wvyb/gvyv/rrgr/bgbw/wwvg 1
-bvrv/wvyb/gwyg/grrr/ygyw/wbvb 3
-bgvv/ygvv/ryyw/wbgb/rwrw/rbgy 10
-bbbr/ggbw/wyyr/vygg/rrww/vvyv 0
-bbry/wvyv/gvgy/rrbw/ggbw/wrvy 5
-bbry/wvbw/gvyv/rrgy/ggbw/vwyr 7
-bbwv/wvbw/ygvv/rryy/ggbw/gryr 11
-bbwg/wvbw/ybvv/ryry/rgrw/ggyv 2
-bbrr/wgbw/bvyv/gygy/rgrw/vwyv 4
-bbww/rbgg/ggvw/vwyy/yyrb/rvrv 0
-bbbg/yyrb/rrgv/vgwg/wwwy/ryvv 5
-bbbg/yywy/rrrb/vggv/wwwg/vrvy 7
-bbyy/yvwr/rrbr/bggv/wwwg/gvvy 9
-bbww/rbrg/gvvg/ywrg/yywy/rbvv 4
-bbww/rbvg/gvrg/ywwy/yyrg/bvrv 8
-brry/gvbr/gbyw/wyyw/vrvg/bvwg 11
-brrv/gbbv/ygwb/ryyw/vrvg/ywwg 1
-bgrb/gbbv/ywwg/yrwy/vrrg/yvwv 5
-bgyw/gbbr/wgyw/vryy/vrrg/bvwv 8
-bgyw/gbyw/wgyy/vrrg/vrbr/vvbw 0
-bgvr/gwyy/gywy/vrvg/vrbr/bwbw 2
-bgrw/wbwb/ygyy/vbrg/rgvv/wvyr 5
-bbww/wvgg/yywv/bryy/ggbr/vrvr 1
-bgvv/rwry/ggvw/rbgw/ryby/wbvy 5
-bgvv/rwvw/gggw/rbby/ryry/bywv 8
-bgrb/rvvv/gwgg/ybby/ryry/wwwv 10
-bgrb/rvgg/gwby/ybry/ryvv/wvww 2
-bgwv/wvwr/yrby/yrwb/vgrg/gbvy 5
-bgwv/wvrg/yrwr/yrby/vgwb/vgyb 9
-bggv/wvrg/wyrr/wrvy/vgwb/byyb 11
-bggv/wvrr/wyvy/wrwb/vgrg/ybby 2
-brgv/wvrr/wgvv/rbww/ygbg/yyby 6
-brgv/wvvv/wgww/rbbg/ygrr/yyyb 8
-brvv/wyvy/wwwg/gbvg/ygrr/bryb 1
-bggw/rvbv/wywv/bryb/vygg/yrwr 3
-bgvv/rybr/wwvy/grwb/vygg/ybwr 5
-bbgw/ybrb/rgrg/vgvw/wwyy/yrvv 2
-bbgw/ybrg/rgvw/vgyy/wwrb/rvyv 6
-bbww/rygb/bggw/vgyy/wyrr/rvvv 9
-bbby/rrgv/gbwg/wgwy/wyrr/yvvv 11
-bbby/rrrr/gbgv/wgwg/wywy/vyvv 3
-bbww/gbgy/ggww/vyyy/rrrr/bvvv 6
-bgvw/ygbg/rvrv/yvyy/wwbg/brwr 10
-bgvw/ygrv/rvyy/yvbg/wwbg/rrbw 0
-bbwy/gbww/gwvv/vyry/rrry/ggbv 3
-bbwy/gbry/gwww/vyvv/rrry/bgvg 7
-bbby/rrry/gbrg/wgww/wyyv/vvgv 9
-bbby/rryv/gbry/wgrg/wyww/gvvv 1
-bbwr/ryyb/bygr/vggg/wyww/rvvv 4
-bwww/ryyb/bbgr/ggvg/vyvw/ryvr 6
-bbry/yvrv/grgr/bgbw/wwyy/wgvv 3
-bbwg/gvgg/ywwv/byyw/rrbr/vrvy 7
-brrr/yvby/ggrv/bbgv/ywwg/vwwy 9
-bbgr/gvgr/wbvv/ywwg/yrbr/yyvw 0
-bbyw/grgg/bvwv/ywyg/yrbr/vrvw 4
-bbyw/grwv/bvyg/ywbr/yrgg/rwvv 6
-bvyg/grwv/bwyv/byrw/wrbg/rgvy 11
-bggr/yvgr/wbvw/ybgv/rwwr/ybvy 1
-bggr/yvwr/wbgr/ybvw/rwgv/vyyb 3
-bbyv/wvbw/ryvv/wrrw/ggby/ggry 10
-bbwr/wvby/yvrv/grgw/ggby/vwry 2
-bbwr/wvby/yvby/grrv/gggw/rvyw 5
-brwg/gygr/bwyv/bvwy/grrv/bywv 7
-bbyy/yvww/rryv/bgrr/wwbg/vgvg 5
-bbwv/yvwg/yrvr/ygyr/wwbg/rbvg 9
-bbww/yvwg/ybvv/gryy/gwbg/rrvr 0
-bbww/yvvv/ybyy/grbg/gwwg/rrrv 2
-bggr/rvgw/wgbw/bwyy/byrr/yvvv 6
-bvyv/gwwb/vgyr/rryb/yrwg/wbvg 9
-bbwv/yvrg/yrvb/yrwg/gwwb/rgyv 1
-bbwv/yvwb/yrrg/yrvb/gwwg/yrvg 3
-bbyv/yvww/rgyr/rryb/gwwg/vbvg 6
-bbyv/yvyr/rgyb/rrwg/gwww/bgvv 10
-bbrw/yvyy/gbry/grbg/gwww/vrvv 0
-bbrw/yvww/gbyy/grry/gwbg/vvvr 5
-bbwv/yvwv/ygyb/rrwy/gwbg/rgvr 7
-bgwb/yvwv/ygyr/wryr/vwbg/rbvg 9
-bbvw/rwgb/gygv/bgwy/wyrr/ryvv 11
-bbbw/rrgy/ggvy/vgwy/wyrr/wbvv 1
-bbyg/gbvv/wvyg/wybr/rrgy/rwwv 5
-bgwy/rygb/bvgv/rvwg/wybr/ryvw 8
-bbww/rygb/bggy/vgrw/wyyr/rvvv 10
-bbbg/wwyw/yryb/vrrg/ggwv/vyrv 4
-bbbg/wwwv/yryw/vryb/ggrg/rvvy 9
-bbvw/wrwv/yywr/brgb/ggrg/yvvy 11
-bbvw/wrrg/yywv/brwr/gggb/vyyv 3
-bbbw/wwrv/yvyw/yrvr/gggb/rgyv 6
-bbgg/ybyw/rryv/vggb/wwrv/vwry 8
-bbgg/ybyv/rrgb/vgrv/wwyw/wyvr 0
-bbbv/wwyw/ywyy/grbr/gggv/vrrv 3
-bbww/wvyr/yyyw/brvr/gggv/bgrv 7
-brvr/ywbw/gvyy/ggbr/bwvg/vrwy 9
-bvvy/ywbw/gryy/bgrg/rwrg/vvwb 11
-bbby/yrgr/grvg/bgww/wwyr/yvvv 5
-bgww/rgbb/vvgv/ywyv/byrw/rryg 9
-bggy/gvvv/wbwr/wryb/vrwr/ybyg 0
-bgwy/gyvg/brww/bryb/vrwr/vvyg 4
-bgwy/gyww/bryb/brwr/vrvg/vgvy 6
-bryb/ywgb/vggw/wbvy/ywrr/rgvv 9
-byyb/rwbb/vggw/wvvv/ryrw/rgyg 1
-byyb/rwrw/vgbb/wvgw/ryvv/yrgg 3
-bgyv/wvvv/ryrb/wbrb/rgyw/gygw 10
-bbyg/grbw/bryr/vwvg/yrwg/vywv 0
-bgrg/wbyw/ybvy/rrvr/vgvb/gwwy 4
-bgrg/wbvy/ybvr/rrvb/vgyw/wygw 6
-bgrr/yvwg/gbby/ybvr/rwvg/wwvy 11
-bggw/rrgb/vgyv/vwyw/byyb/wrrv 1
-bggv/yvvw/wggb/rbry/rwvr/byyw 5
-bggv/yvgb/wgry/rbvr/rwvw/ywby 8
-bgvy/rwvg/gbrv/wwyw/byyg/brrv 10
-bgwy/ryvv/bvgr/rwbw/byyg/wgrv 2
-bggv/yvrv/wyrb/wbwr/rwvb/ggyy 5
-bggv/yvvb/wyrv/wbrb/rwwr/ygyg 9
-bvvy/rwgg/gbvy/wrvg/yyrw/rwbb 11
-brvy/rwgg/gvvy/rgwv/byww/rbby 2
-bbwg/ryrb/brgg/vgww/wyyy/rvvv 3
-bbby/rrrv/gbgr/wggw/wyyy/wvvv 5
-bbby/rryy/gbrv/wggr/wygw/vwvv 7
-bbwy/gbgy/gwwg/vyvy/rrrv/brwv 2
-brwr/gbgy/gbwy/yyvv/vrrv/bwwg 6
-brwr/gbrv/gbgy/yywy/vrvv/wbgw 9
-bbwy/gbrv/gbgw/wyyy/rrrv/wvgv 11
-bbwy/gbrv/gbrv/wygw/rryy/gwvv 3
-bbwg/gyrw/bvgr/wygw/rryy/bvvv 6
-bbgg/ywgr/bvvr/wygw/rwyb/yvrv 10
-bbwg/yggg/vrbv/vyyw/rwyb/wrrv 0
-bbwg/gygg/brwv/vyyw/rryw/vrbv 3
-byyr/gvvg/rbbb/ywyg/vrvw/wwgr 11
-bbwy/yvgr/yrby/bgrv/wwgr/gvvw 1
-bbwy/yvgr/yrgr/bgby/wwrv/vgwv 3
-bbww/rbyy/ggrb/vwgg/yyvw/vrvr 1
-bgwb/rbyy/grrr/gvgw/wybw/vvvy 5
-bgwb/rbbw/gryy/gvrr/wygw/vvyv 7
-bgww/rbbw/ggyb/vrgr/vyvw/vryy 10
-bgvg/rwbw/gbgy/rrvr/vyvw/bwyy 2
-bbyy/wbwr/wwyy/vrrr/gggg/bvvv 4
-bbyy/wbyy/wwrr/vrgg/ggwr/vvbv 8
-bvgw/rbgy/rgvg/vrvw/yybw/wrby 11
-brwb/ybrw/gryg/gbwv/ywyv/vvgr 1
-bggy/rbbw/rwgr/vvgr/wyvw/bvyy 5
-brgy/ybyw/rwgr/vbgg/ywwv/bvrv 8
-brgy/ybgr/rwgg/vbwv/ywyw/vvbr 0
-bbrr/wywy/vvbv/grgw/ggyy/rwbv 2
-bbyy/wrww/bvvv/rrrw/ggyy/ggbv 5
-bbrr/rvgg/ggbw/bwyy/yyrv/wvwv 2
-bbby/rrgr/gwgb/vwwy/yyrv/vgwv 6
-bbby/rrrv/gwgr/vwgb/yywy/wvvg 3
-bbvr/rwrv/ggrw/bwyb/yywy/gvvg 5
-bbvr/rwwy/ggrv/bwrw/yyyb/vggv 9
-bbbr/rrwv/gvgr/gwvw/yyyb/wygv 0
-bbbr/rrgr/gvvw/gwyb/yywv/yvwg 2
-bbyw/gbvr/wbgy/gyvv/rrgr/vwyw 6
-bbyw/gbgr/wbvr/gygy/rrvv/yvww 9
-bbyr/gbgr/wvvw/ggyy/wrbv/yvwr 1
-bbyr/gbbv/wvgr/ggvw/wryy/wyrv 3
-bgvb/rwrv/gwrb/ybwy/ryvy/ggvw 6
-brwr/gbry/gbwy/yvvv/grgy/bwvw 4
-brwr/gbwy/gbvv/yvgy/grry/wwbv 6
-bryr/gbwg/wbvw/yyvy/vrvb/rggw 10
-bbgv/ybrr/ryvv/wggr/wwgb/ywyv 1
-bbbr/wwgb/yyrw/vrvy/ggvr/ygvw 5
-bbbr/wwvr/yygb/vrrw/ggvy/vywg 7
-bbvv/wrgb/ywyr/gryy/ggvr/wbvw 2
-bbvv/wryr/ywyy/grvr/gggb/bwwv 4
-bbgv/ywrr/bwvy/grvr/gwgb/ywyv 9
-bbrw/yyrw/vbyw/grvr/gwgb/vgyv 11
-bbrw/yyrw/vgyv/vgrr/wwbb/vgyg 3
-bbvr/ywrr/gvvy/ggvr/wwbb/ywyg 6
-bbvr/ywvy/gvvr/ggbb/wwrr/wgyy 8
-bbry/wgwb/bwyy/vyrr/rggg/wvvv 9
-bbbg/wwwv/ybyw/ryyr/rggg/rvvv 11
-bbbg/wwgg/ybwv/ryyw/rgyr/vrvv 1
-bgyy/rbgb/wvww/rbvw/ryyr/ggvv 8
-bgyr/wrwb/bgyy/brry/vgvg/wvvw 0
-bgwb/rgwv/vwwv/ybyr/rygb/yrgv 3
-bgyb/wrvg/bwwv/ybyr/rggy/vrwv 5
-bryb/grbg/bwwv/yvyw/gryg/vrwv 9
-bggr/wvvr/wgvr/bryb/vgyy/ybww 0
-bbyg/grwv/bryb/vgyy/wrvg/rwvw 4
-bbyg/gryb/bryy/vgvg/wrwv/wwrv 6
-bryy/gryb/bwyv/vvgg/grbv/wwrw 9
-bryv/grwb/bywy/wywr/vrgg/gbvv 10
-bbwv/rbgw/ggvv/rwyw/yyyb/grrv 1
-bbry/wbvb/ywyy/vrrg/ggwg/wvrv 3
-bbbb/ggwg/wwvv/yyyw/rryg/rrvv 7
-bbgg/grwr/vwvw/bybw/rryg/yyvv 9
-bbbb/ggvv/wwyw/yyyg/rrwg/rvrv 10
-bbgv/ybyb/rgrw/rgvv/wwyw/ygvr 2
-bbgv/ybyw/rgyb/rgrw/wwvv/vyrg 11
-bggb/rrwg/vwbv/ybyw/ryyg/wrvv 1
-bggb/rryg/vwwg/ybbv/ryyw/vwvr 5
-bgry/ybbg/ywry/vrrg/vwwg/bvwv 8
-bgyb/rbvw/wgvv/wbyw/ryyg/grrv 10
-bbrr/wbgg/yywb/vryy/ggvr/vwvw 7
-bbbg/ggvr/wvgw/wyby/rrry/vywv 11
-bbbg/ggry/wvvr/wygw/rrby/wvvy 1
-bbwg/ggrb/vrwv/vyww/rrby/gyvy 4
-bbwg/ggwv/vrww/vyby/rrrb/yygv 8
-bgvw/rwrb/gvgw/yrgw/vyby/rbvy 10
-bgvw/rwby/gvrb/yrgw/vygw/vryb 3
-brrg/wgry/bvvb/wyrb/vgyv/wygw 5
-brgv/ywvg/brrg/ybwv/ywwg/bvry 7
-brwr/wgrr/vbbv/yywb/vgyv/gygw 2
-bvgg/rbrv/rrgw/vygw/wyby/wbvy 6
-bryb/yvbw/rrvr/gbgv/ywwg/gvwy 9
-brgv/rbby/rwrb/gvwy/gyvw/vgyw 11
-bgrb/rgvr/bwvg/yrbv/vygy/ywww 0
-bbwy/yvgg/yrwv/bgyr/wwbr/vrvg 1
-bbby/yygw/rvyw/rgvr/wwbr/vgvg 4
-bbby/yyyw/rvvr/rgbr/wwgw/ggvv 6
-bbwg/rbvy/grrb/vwgw/yyyw/vrgv 10
-bbwg/rbyw/grvy/vwrb/yygw/gvvr 1
-bgwy/yvgg/yrwb/brwy/vwrb/vgrv 5
-bgwy/gygv/brwb/brwy/vrrv/ygwv 7
-bbwg/rbbw/gryy/vrrv/gygw/vvyw 10
-bbvr/rgbw/rygy/vrvv/gygw/bwyw 2
-bgvg/rgbw/rbgr/rvvv/wyww/byyy 4
-bgvg/rggr/rbvv/rvww/wybw/yyby 8
-bgrg/rygy/vrvb/vvgw/wybw/wrby 11
-bgrg/rybw/vrgy/vvvb/wygw/bwyr 1
-bbwv/rbgg/grvv/ywwg/yywb/ryrv 7
-bbrw/wbvb/ygyw/vryr/gggr/wvyv 11
-bbbb/gggr/wwvv/yywg/rrwr/yyvv 1
-bbrw/wbyw/ygyr/vrgr/ggvb/vvwy 8
-bvgy/ywwb/bvrg/rgrv/rwgv/ybyw 10
-bbwv/rbgv/ggyv/rwgv/yywb/rwry 3
-bbrw/wbvb/yvyg/yrwr/ggvg/wvry 5
-bbrw/wbvg/yvvb/yryg/ggwr/rwyv 9
-bgwv/rbgw/grvw/yrbv/vywb/gyry 0
-bwrg/wbvw/ybyy/rgwr/vgvg/vbry 2
-bbvy/rwgw/gwgv/vwry/yyrb/bgrv 4
-bbyy/grww/bwvv/vwry/yrrb/gggv 7
-bbwr/ggwg/vbvw/ywyy/yrrb/rvgv 9
-bbwr/ggrb/vbwg/ywvw/yryy/grvv 1
-bbyv/grrw/bgvw/rwgw/yryy/gbvv 4
-bbyv/grvw/bggw/rwyy/yrrw/bvgv 8
-bbgv/rwgv/bggw/rwyy/yyrb/wvrv 10
-bggw/wvbb/wvrg/yrrv/vgyw/ybyr 1
-brwr/ggvb/vbwb/yyyv/vrry/gwwg 5
-brwr/ggry/vbvb/yywb/vryv/wggw 7
-brwv/ggvb/vrwr/yvyy/grwy/gbwb 2
-brwv/ggwr/vryy/yvwy/grvb/bbgw 4
-bbyy/wbgg/wwwr/vryy/ggrr/vbvv 9
-bbbg/ggrr/wvgb/wwrw/yryy/vyvv 11
-bbrg/gvry/gwbv/bwgw/yryy/rwvv 1
-bbbg/gggb/wvrw/wwyy/yrrr/yvvv 8
-bbwy/gggb/vwwr/vwyy/yrrr/gbvv 0
-bggg/wvvb/wbrw/rryb/vgyr/yvyw 3
-bbvg/rwwb/grgb/vgyr/wyvv/rwyy 5
-bbby/wwyy/yvbg/rrwg/ggvw/rvvr 6
-bbgv/ybby/rgrw/rgvw/wwyy/vgrv 10
-bbgv/ybrw/rgvw/rgyy/wwby/gvvr 0
-bggw/ybrw/rvvr/yryg/vwby/gbvw 3
-bggw/ybby/rvrw/yrvr/vwyg/vgwb 7
-brgr/rvry/wgvb/byyb/vywv/wwgg 9
-bgyv/ywbg/vwrr/grvr/vwyg/bywb 4
-bwyg/rvrg/rwwb/bygw/byyv/vrgv 6
-bbgw/wvrr/wygv/brwy/ggby/vyvr 7
-bbgg/wvrr/wbgw/rybw/rgyy/vyvv 10
-bbbr/rgyy/wgrg/bwwg/yyvw/vvvr 0
-bbbr/rgrg/wgwg/bwvw/yyyy/vrvv 4
-bbgg/rvrr/wwgg/bwrw/yyyy/vbvv 7
-bgyy/yvyv/rrrv/bwgg/bwrw/gwvb 11
-bgyy/yvrw/rryv/bwrv/bwgg/vgbw 1
-bbrg/rvry/gwvv/bwgg/yyry/wwvb 4
-bbrg/rvvv/gwgg/bwry/yyry/wbwv 8
-bggg/yrrb/vvrv/wwwg/bwry/yyvb 10
-bggg/yrry/vvrb/wwrv/bwwg/vyby 3
-bgyr/yvry/rvbv/gwgv/bwwg/rwby 5
-bbwr/wvgg/ybwr/yrvy/ggwr/vyvb 7
-bbby/wwwv/yvry/rrbv/ggwg/grvy 7
-bbyv/yrry/brvr/ygbg/wwwv/wggv 9
-bgvv/ryyr/wwgw/gbgy/ryrb/vbwv 1
-bbvy/wgww/rvyw/rrby/ggbg/vyvr 4
-bbbr/ggbg/wywv/vwry/yrvy/vgrw 6
-bbbr/ggwv/wyry/vwvy/yrbg/gwvr 10
-bbyy/wwrr/vvyw/rrbg/ggwv/bygv 1
-brgr/yvvy/wgbg/byvg/vwby/rrww 5
-bryv/yrvr/bwgg/gyrg/vwby/vbww 7
-bbyv/yrvr/brgv/yggr/wwby/vwwg 10
-bbgv/ybrw/rgvv/rgyw/wwyb/gryv 4
-bbbw/wwyb/ygrr/vrvg/ggvw/yyvr 7
-bbbw/wyyy/ryrg/brwg/ggvw/vvvr 11
-bbbw/wyvw/ryyy/brrg/ggwg/vvrv 1
-bbgv/rbrw/rgbw/rgvw/wyyy/ygvv 8
-bbgv/rbbw/rgvw/rgyy/wyrw/gvyv 10
-brgw/ybbv/rvyy/yvbv/gwgg/rrww 3
-bgvw/wrwr/yyyb/brgw/vgyg/brvv 6
-bgvw/wryb/yygw/bryg/vgwr/rvbv 8
-brvb/rwgv/grrv/gywy/vyww/gybb 0
-bbgw/ybyv/rvgr/yggr/wwyv/wvrb 3
-bbgw/ybyv/rvyv/yggr/wwgr/rwbv 7
-bbbv/wwgr/yryw/yrvv/ggwr/bgvy 9
-bbbv/wwyw/yrvv/yrwr/gggr/gybv 0
-bbwy/rbrr/gwgb/vwgw/yyvy/vrvg 1
-brrr/wbbw/yyyb/vvyv/gggr/vwgw 3
-brwb/wvbw/yyby/rvrv/gggr/yvgw 5
-bgrg/wbbw/yryr/vvvy/wgwr/vygb 0
-bgvv/wgbr/rryy/yvvy/wgwr/bwgb 4
-brvy/wgbr/rwyb/vyyv/vggr/bwgw 7
-brrw/gbww/yvby/yvrb/grwg/yvvg 9
-brrg/wggb/brrw/vyyb/vgyv/yvww 1
-brrg/gbwg/yrww/vyyb/vryb/vvgw 4
-bggw/rwgg/byrv/bvyv/wywr/brvy 8
-bgrw/wgrg/byvv/bvyv/wgwb/rryy 10
-bgrw/wgwb/byrg/bvvv/wgyv/yryr 1
-bgvg/rgww/rbbw/rvgr/wyvv/ybyy 9
-bbvw/rgww/rbby/grrv/gygv/yvyw 11
-bbvw/rggv/rbww/grby/gyrv/yywv 1
-bwyw/gbgb/wgwv/vvyy/yrbr/grvr 11
-bbbw/wwvg/yvwy/yrbr/gggr/vryv 3
-bbgw/wvvr/wyyv/brwr/gggr/byyv 5
-bbgw/wvyv/wywr/brgr/ggvr/yvby 8
-bvyv/rvgg/ryrv/wwry/gyww/bgbb 0
-bgyw/gbvb/wgwy/vrbw/vryr/gryv 2
-bgyw/gbyr/wgvb/vrwy/vrbw/ygvr 7
-bvgw/wvvr/wyyr/brgb/yggy/bvwr 9
-bgwy/rvvw/yvgw/rbbg/ryvw/bygr 11
-bbyg/yvwg/rbvb/rgry/wwvg/ryvw 10
-bbrv/gvyg/gwbr/gyvy/rrww/wyvb 3
-bgww/rggg/vvvw/ywby/byrb/ryrv 8
-brrr/wyyb/vvyv/gggr/bgyw/wwvb 1
-brrr/wyyw/vvyb/ggyv/bggr/vwbw 3
-bbgv/gvgy/wywv/wyyw/rrgr/brvb 7
-bbwy/gvgg/yvww/rybw/rrgr/vyvb 10
-bbwy/gvww/yvbw/rygr/rrgg/ybvv 0
-bbrg/gyww/vwyb/byyr/rrgg/vwvv 4
-bbrg/gygg/vwww/byyb/rryr/vvvw 7
-bbgy/gvgv/wvww/rygb/rryr/ybvw 11
-bbgy/gvyr/wvgv/ryww/rrgb/vywb 1
-bggr/gvyr/wbgy/ywrw/bryb/vvwv 4
-brwv/yvbg/yrwr/ygyv/bwrg/vbwg 7
-bbgw/wvgb/wyrv/brwv/ggyr/yyvr 10
-bbbw/wwgg/yvwr/yryv/ggyr/vbvr 2
-bbbw/wwwr/yvyv/yryr/gggg/brvv 4
-bbvv/yryv/yyrr/wgbg/wwwr/ggbv 9
-bbvv/yrwr/yyyv/wgrr/wwbg/bgvg 11
-bbrr/ybwg/yyvy/vgvr/wwbg/rwvg 1
-bbvw/yrwr/ybyv/grwr/gwgg/byvv 8
-bbvw/yryv/ybwr/grgg/gwwr/yvbv 0
-bbvr/yryv/yvwv/gggr/wwbr/ywbg 3
-bbvr/yrbr/yvyv/ggwv/wwgr/bygw 5
-bbby/rrgb/gwwy/vwrv/yygr/gvvw 8
-bbyw/gvww/rvvw/yybr/rrgb/gygv 11
-bbyw/gvgb/rvww/yyvw/rrbr/ggvy 3
-bbbv/gggg/wrwv/yyww/rrbr/vyvy 5
-bbyr/gvgb/rbww/ywyv/yrgr/gvvw 0
-bbyr/gvww/rbyv/ywgr/yrgb/vwgv 2
-bbwv/gvww/yrvb/ywrr/yrgb/gygv 7
-bbwv/gvgb/yrww/ywvb/yrrr/ggvy 9
-bgvg/wyyg/wbwr/rrvb/vgyr/vybw 1
-bgrv/wgyv/brww/yrvb/vgyr/ygbw 4
-bgrv/wgww/brvb/yryr/vgyv/gwyb 6
-bbgv/ybyy/rgby/rgrw/wwvw/rvvg 1
-bbby/wwvw/yryv/bryg/ggvw/vrgr 3
-bbww/wvvr/yyvr/bryg/ggvw/ybgr 7
-bbww/wvvr/yyyg/brvw/ggvr/bryg 10
-brvw/ygby/rgrg/vgbw/bwyy/vwrv 2
-bvwg/wvyw/ybbv/rwrr/ggvr/ygby 4
-bbwv/wvyw/ygby/rrrw/ggvr/yvbg 7
-brgw/ybwy/rvbr/yygg/vwbg/rvvw 3
-brgw/ybbr/rvgg/yybg/vwwy/vwrv 6
-brrv/gbwy/ywwv/gvyw/grgv/bryb 8
-bbbg/yywb/rrgy/vgvr/wwvg/rwvy 5
-bbby/yrww/gryr/bggr/wwvg/vvvy 7
-bbby/yryr/grgr/bgvg/wwww/vyvv 10
-bbww/gbgy/ggbv/vwyw/yryr/rrvv 2
-bgwb/rgvv/vwyw/ywyb/bygg/rvrr 4
-brgr/wbyy/ryvv/vvgr/ggyb/wwwb 9
-bryb/wwyw/vrvy/gvrr/ggyb/gvwb 11
-bgrb/gvrr/gwyg/ywww/bryy/bvvv 1
-bggw/wvvr/wygv/bbyb/rgry/vrwy 1
-bbgv/yrwv/vrwy/yrbg/gwbg/yrvw 3
-bbbb/gggg/wwww/yyyy/rrrr/vvvv 6
-bbww/rbrb/gggg/vwvw/yyyy/rrvv 8
-bggr/rbbw/rygy/vvvr/wygw/bwyv 10
-bggr/rbgy/ryvr/vvgw/wybw/wvby 0
-bbyy/wbyw/wwvv/vrry/ggrr/ggbv 4
-bbbw/ggrr/wgyg/vwvw/yryy/brvv 7
-bbrg/gbrr/ywgg/bwww/yryy/vvvv 11
-bgyr/yvyv/rgrb/bwrg/bwww/gyvv 1
-bvgg/rbgw/rrgr/vyvy/wywv/bywb 4
-bbyw/rvgw/rvvg/ywbr/yygb/gwrv 10
-bbyw/rvgb/rvgw/ywvg/yybr/rgvw 1
-bgvr/grwg/ybwv/yrwb/vryb/vygw 3
-brrv/yvbr/grbg/ybwv/ywwg/gvwy 7
-bryw/yvbr/rggb/vbgv/ywwg/vrwy 10
-bgvw/rwby/gvrg/ywrv/byrw/vbyg 2
-bbyy/yvgb/rrgw/bgvw/wwyr/rgvv 4
-bvvv/rwrg/ggry/ryww/wygy/bbvb 7
-bbyg/gbgy/wwvv/bygy/rrrr/wwvv 1
-bgwv/ryrb/bygg/wwvv/bygy/rrvw 4
-bgwv/rygg/byvv/wwgy/byrb/rwrv 6
-bgvv/ygrg/ryrv/wwgy/bwrb/bwyv 10
-bgvv/ygrb/ryrg/wwrv/bwgy/ybvw 1
-bbgg/rrgy/vwvv/bwgy/yyrb/wwrv 5
-bbgg/rrrb/vwgy/bwvv/yygy/rwvw 7
-bggy/rrrb/vbgg/wvbv/wywy/rwvy 10
-bbyv/gvyw/rgvw/rygw/rrbw/gbvy 11
-bggg/rrbr/vvvg/wwrv/byww/ybyy 10
-bggg/rrww/vvbr/wwvg/byrv/yyyb 1
-bgwr/rywy/bvrv/gwgg/byrv/vwyb 3
-bbvr/ygyg/rbrg/ygwv/wwyw/bvvr 2
-bbvr/ygyw/rbyg/ygrg/wwwv/vbrv 7
-bbwg/yvyb/yrgb/vgrg/wwwv/ryrv 9
-bgvw/wrwr/yybv/brwb/vgrg/gyvy 11
-bbrw/yybb/vgrw/vgyv/wwrr/yvgg 5
-bbyy/rvwb/rbwr/wrgv/gywg/gvvy 8
-bgwv/rbvy/gywv/wbyg/ryvw/brgr 3
-bgwv/rbwv/gyyg/wbvw/ryvy/rrbg 6
-brgy/yryg/vwwb/vygg/vwbr/vrbw 10
-brgy/yrwb/vwgg/vybr/vwyg/rwvb 0
-bvry/wbvg/yvrv/rygw/wgbg/bwry 3
-bggv/ywgw/bwyb/grrr/vwvb/vyry 6
-bgww/yvgy/ybbw/grvr/vwvb/rgry 9
-bgwr/rgry/vvrw/gwbw/byyg/vybv 11
-bgvr/gwwy/gyvg/vrbr/vryy/wwbb 4
-bgrv/yvby/gwry/gbvb/rwrg/vwwy 11
-bvwv/rgbb/vrgg/yyvw/wygw/rryb 6
-bgww/rgrw/vvbb/ywgv/byyv/yrgr 1
-bgyy/wvyg/rbrv/wrgr/vgyw/bwvb 3
-bgry/yygb/vwwy/vbbw/rwvr/grvg 7
-bgvb/yygr/wyvw/rbgw/rwvr/ybvg 10
-bvgw/rbgw/rvvb/yryg/yyvw/gwbr 2
-bbrv/gbwv/ywyg/gwbr/yrgv/rwyv 4
-bbrv/gbgv/ywwv/gwyg/yrbr/yrvw 7
-bgyv/grwb/brwv/yrww/vrbg/gyvy 0
-bggr/yvyg/wbbr/ybvg/rwvw/wyvr 3
-bggr/yvvw/wbyg/ybbr/rwvg/vwry 7
-bbgg/yvvw/wwyy/byrb/rwgg/vvrr 9
-bgwy/rgyv/vwry/vwrb/bygb/gvwr 4
-bgvr/ryyw/wyvr/vwgb/bygb/gvwr 6
-bgyr/yrwy/byvr/vwgb/bwgg/wvvr 11
-bgyr/ywwv/vbry/ywrb/bwgg/gvvr 1
-bgyr/ywgg/vbwv/ywry/bwrb/vgrv 5
-bryb/ywgg/vgwr/wyyr/vwgb/vbrv 8
-brwy/ybgy/grvw/byvr/vwgb/wgrv 10</textarea>
 </body>
 </html>
