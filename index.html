@@ -972,9 +972,31 @@
 			var normalizer = new Normalizer();
 			var normalizedCurrentPosition;
 			var unusedHanlde;
-			normalizedCurrentPositionAndHanlde = normalizer.normalize(currentPosition, 0);
+			var resultArray = normalizer.normalize(currentPosition, 0);
 			
-			var currentBoardText = normalizedCurrentPositionAndHanlde[0].getBoardText();
+			var currentBoardText = resultArray[0].getBoardText();
+
+			// 正規化したのだから、視角が変わるはず。
+			var rotateX = resultArray[2];
+			for (var i = 0; i < rotateX; i++)
+			{
+				// +X
+				rotateView(2);
+			}
+
+			var rotateY = resultArray[3];
+			for (var i = 0; i < rotateY; i++)
+			{
+				// +Y
+				rotateView(0);
+			}
+
+			var rotateZ = resultArray[3];
+			for (var i = 0; i < rotateZ; i++)
+			{
+				// +Z
+				rotateView(1);
+			}
 			
 			// alert("正規化後 currentBoardText=" + currentBoardText);
 			

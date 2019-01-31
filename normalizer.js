@@ -88,7 +88,7 @@ Normalizer.prototype.normalize = function(sourcePosition, handle)
 	// 今回 回そうと思っていたハンドルを変更します。
 	var normalizedHandle = this.rotateView(normalizedIndex, handle);
 	
-	return [normalizedPosition, normalizedHandle];
+	return [normalizedPosition, normalizedHandle, this.isomorphicX[normalizedPosition], this.isomorphicY[normalizedPosition], this.isomorphicZ[normalizedPosition]];
 };
 
 /**
