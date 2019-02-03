@@ -6,6 +6,9 @@
 	
 	<!-- 局面。 -->
 	<script src="position.js"></script>
+	
+	<!-- 指し手のユーティリティー。 -->
+	<script src="move-helper.js"></script>
 
 	<!-- 回転ボタン。 -->
 	<script src="rotateButtonGroup.js"></script>
@@ -390,52 +393,6 @@
 					shift4RotateButton(1, 3, 5, 9);
 					break;
 			}			
-		}
-		
-		/** 反対方向のハンドルを取得。 */
-		function getReversedHandle(handle)
-		{
-			var reverse;
-			switch(handle)
-			{
-				case 0:
-					reverse = 7;
-					break;
-				case 1:
-					reverse = 6;
-					break;
-				case 2:
-					reverse = 9;
-					break;
-				case 3:
-					reverse = 8;
-					break;
-				case 4:
-					reverse = 11;
-					break;
-				case 5:
-					reverse = 10;
-					break;
-				case 6:
-					reverse = 1;
-					break;
-				case 7:
-					reverse = 0;
-					break;
-				case 8:
-					reverse = 3;
-					break;
-				case 9:
-					reverse = 2;
-					break;
-				case 10:
-					reverse = 5;
-					break;
-				case 11:
-					reverse = 4;
-					break;
-			}
-			return reverse;
 		}
 
 		/**
