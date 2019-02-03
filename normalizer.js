@@ -5,37 +5,103 @@ var Normalizer = function()
 {
 	this.isomorphicPosition = [];
 	this.isomorphicX = [];
-	this.isomorphicY = [];
 	this.isomorphicZ = [];
 };
 
 /**
  * 同型を作ります。
  */
-Normalizer.prototype.createIsomorphic = function(sourcePosition, isomorphicIndex, rotateX, rotateY, rotateZ)
+Normalizer.prototype.createIsomorphic = function(sourcePosition, isomorphicIndex, firstRotation, secondRotation)
 {
 	var pos = new Position();
 	pos.copyFrom(sourcePosition);
 
-	for (var i = 0; i < rotateX; i++)
+	// 色は関係ない。
+	switch (firstRotation)
 	{
-		// +X
-		pos.rotateView(2);
-		this.isomorphicX[isomorphicIndex] += 1;
+		case 0:
+			// そのまま。
+			break;
+
+		case 1:
+			// +X に1回 倒す。
+			pos.rotateView(2);
+			this.isomorphicX[isomorphicIndex] += 1;
+			break;
+
+		case 2:
+			// +X に1回 倒す。
+			pos.rotateView(2);
+			this.isomorphicX[isomorphicIndex] += 1;
+
+			// +Z に1回 回す。
+			pos.rotateView(1);
+			this.isomorphicZ[isomorphicIndex] += 1;
+			break;
+
+		case 3:
+			// +X に1回 倒す。
+			pos.rotateView(2);
+			this.isomorphicX[isomorphicIndex] += 1;
+
+			// +Z に2回 回す。
+			pos.rotateView(1);
+			pos.rotateView(1);
+			this.isomorphicZ[isomorphicIndex] += 2;
+			break;
+
+		case 4:
+			// +X に1回 倒す。
+			pos.rotateView(2);
+			this.isomorphicX[isomorphicIndex] += 1;
+
+			// +Z に3回 回す。
+			pos.rotateView(1);
+			pos.rotateView(1);
+			pos.rotateView(1);
+			this.isomorphicZ[isomorphicIndex] += 3;
+			break;
+
+		case 5:
+			// +X に2回 倒す。
+			pos.rotateView(2);
+			pos.rotateView(2);
+			this.isomorphicX[isomorphicIndex] += 2;
+			break;
+
+		default:
+			break;
 	}
 
-	for (var i = 0; i < rotateY; i++)
+	// 色は関係ない。
+	switch (secondRotation)
 	{
-		// +Y
-		pos.rotateView(0);
-		this.isomorphicY[isomorphicIndex] += 1;
-	}
+		case 0:
+			break;
 
-	for (var i = 0; i < rotateZ; i++)
-	{
-		// +Z
-		pos.rotateView(1);
-		this.isomorphicZ[isomorphicIndex] += 1;
+		case 1:
+			// +Z に1回 回す。
+			pos.rotateView(1);
+			this.isomorphicZ[isomorphicIndex] += 1;
+			break;
+
+		case 2:
+			// +Z に2回 回す。
+			pos.rotateView(1);
+			pos.rotateView(1);
+			this.isomorphicZ[isomorphicIndex] += 2;
+			break;
+
+		case 3:
+			// +Z に3回 回す。
+			pos.rotateView(1);
+			pos.rotateView(1);
+			pos.rotateView(1);
+			this.isomorphicZ[isomorphicIndex] += 3;
+			break;
+
+		default:
+			break;
 	}
 
 	return pos;
@@ -48,15 +114,14 @@ Normalizer.prototype.createIsomorphic = function(sourcePosition, isomorphicIndex
 Normalizer.prototype.normalize = function(sourcePosition, handle)
 {
     var isomorphicIndex = 0;
-	for (var rotateZ = 0; rotateZ < 4; rotateZ++)
+	
+    // 色は関係ない。
+	for (var firstRotation = 0; firstRotation < 6; firstRotation++)
 	{
-		for (var rotateY = 0; rotateY < 4; rotateY++)
+		for (var secondRotation = 0; secondRotation < 4; secondRotation++)
 		{
-			for (var rotateX = 0; rotateX < 4; rotateX++)
-			{
-				this.isomorphicPosition[isomorphicIndex] = this.createIsomorphic(sourcePosition, isomorphicIndex, rotateX, rotateY, rotateZ);
-				isomorphicIndex++;
-			}
+			this.isomorphicPosition[isomorphicIndex] = this.createIsomorphic(sourcePosition, isomorphicIndex, firstRotation, secondRotation);
+			isomorphicIndex++;
 		}
 	}
 
@@ -88,7 +153,7 @@ Normalizer.prototype.normalize = function(sourcePosition, handle)
 	// 今回 回そうと思っていたハンドルを変更します。
 	var normalizedHandle = this.rotateView(normalizedIndex, handle);
 	
-	return [normalizedPosition, normalizedHandle, this.isomorphicX[normalizedPosition], this.isomorphicY[normalizedPosition], this.isomorphicZ[normalizedPosition]];
+	return [normalizedPosition, normalizedHandle, this.isomorphicX[normalizedPosition], 0, this.isomorphicZ[normalizedPosition]];
 };
 
 /**
@@ -101,12 +166,6 @@ Normalizer.prototype.rotateView = function(isomorphicIndex, handle)
 	{
 		// +X
 		rotateButtonGroup.rotateView(2);
-	}
-
-	for (var iView = 0; iView < this.isomorphicY[isomorphicIndex]; iView++)
-	{
-		// +Y
-		rotateButtonGroup.rotateView(0);
 	}
 
 	for (var iView = 0; iView < this.isomorphicZ[isomorphicIndex]; iView++)
